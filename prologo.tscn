@@ -1,0 +1,72 @@
+[gd_scene load_steps=15 format=3 uid="uid://dedvpl02v5jn0"]
+
+[ext_resource type="PackedScene" uid="uid://ls1l2ut2f0cx" path="res://player/player.tscn" id="1_ngf0k"]
+[ext_resource type="Script" path="res://script/prologo.gd" id="1_sb6kx"]
+[ext_resource type="Texture2D" uid="uid://buuitha7gqo4v" path="res://texture/futuristic_floor_texture.jpg" id="2_joj8s"]
+[ext_resource type="Texture2D" uid="uid://t216wgtup5ch" path="res://texture/icon.svg" id="3_p63ap"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_oglog"]
+sky_top_color = Color(1, 1, 1, 1)
+sky_horizon_color = Color(0.278431, 0.286275, 0.294118, 1)
+sky_cover_modulate = Color(0.227451, 0.227451, 0.227451, 1)
+ground_horizon_color = Color(0.109804, 0.109804, 0.117647, 1)
+
+[sub_resource type="Sky" id="Sky_yaj5w"]
+sky_material = SubResource("ProceduralSkyMaterial_oglog")
+
+[sub_resource type="Environment" id="Environment_a1v7d"]
+background_mode = 2
+sky = SubResource("Sky_yaj5w")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2lian"]
+albedo_texture = ExtResource("2_joj8s")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_hqgpf"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_4ggth"]
+material = SubResource("ShaderMaterial_hqgpf")
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_2ogl0"]
+data = PackedVector3Array(1, 0, 1, -1, 0, 1, 1, 0, -1, -1, 0, 1, -1, 0, -1, 1, 0, -1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_02x8u"]
+albedo_texture = ExtResource("3_p63ap")
+
+[sub_resource type="PrismMesh" id="PrismMesh_ds5j1"]
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_qhhw6"]
+data = PackedVector3Array(0, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, 0, 0.5, 0.5, 0, 0.5, -0.5, 0.5, -0.5, 0.5, 0, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, 0, 0.5, -0.5, 0, 0.5, 0.5, -0.5, -0.5, -0.5, 0, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, -0.5)
+
+[node name="Prologo" type="Node3D"]
+script = ExtResource("1_sb6kx")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_a1v7d")
+
+[node name="Player" parent="." instance=ExtResource("1_ngf0k")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+
+[node name="Flood_default" type="MeshInstance3D" parent="."]
+transform = Transform3D(16.9591, 0, 0, 0, 1, 0, 0, 0, 16.9591, 0, 0, 0)
+material_override = SubResource("StandardMaterial3D_2lian")
+mesh = SubResource("PlaneMesh_4ggth")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Flood_default"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Flood_default/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_2ogl0")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(40, 0, 0, 0, 40, 0, 0, 0, 40, -2.22521, 15.3942, 40.45)
+material_override = SubResource("StandardMaterial3D_02x8u")
+mesh = SubResource("PrismMesh_ds5j1")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_qhhw6")

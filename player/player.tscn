@@ -1,0 +1,254 @@
+[gd_scene load_steps=23 format=3 uid="uid://ls1l2ut2f0cx"]
+
+[ext_resource type="Script" path="res://player/script_player/player.gd" id="1_rx7fi"]
+[ext_resource type="Shader" path="res://texture/shader/time_rewind_shader.gdshader" id="2_tbtnr"]
+[ext_resource type="Texture2D" uid="uid://bd8l8n45f0tqt" path="res://texture/crossair/main_crossair.png" id="2_ucwmm"]
+[ext_resource type="Texture2D" uid="uid://djjdih25h7sra" path="res://texture/crossair/time_speed_crossair.png" id="3_scvu6"]
+[ext_resource type="Shader" path="res://texture/shader/timer_speed_shader.gdshader" id="4_lf8tu"]
+[ext_resource type="Texture2D" uid="uid://cqkodyqdurirg" path="res://texture/crossair/time_rewind_crossair.png" id="4_u0lgh"]
+[ext_resource type="AudioStream" uid="uid://dot0px8gaf284" path="res://sound/sfx/jump_sound.mp3" id="7_boq1b"]
+[ext_resource type="AudioStream" uid="uid://dy152fo78j8qw" path="res://sound/sfx/land.mp3" id="8_l65wn"]
+[ext_resource type="AudioStream" uid="uid://dbde072kx466q" path="res://sound/sfx/dash_1.mp3" id="9_wvo7y"]
+[ext_resource type="AudioStream" uid="uid://ctf45cw7y10p6" path="res://sound/sfx/stap1.mp3" id="10_n1wv6"]
+[ext_resource type="AudioStream" path="res://sound/sfx/dash.mp3" id="10_rrl1p"]
+[ext_resource type="AudioStream" uid="uid://f6luk8ft6rwe" path="res://sound/sfx/stap2.mp3" id="11_8ykhc"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_fnahj"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_wb6ju"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_aaw2v"]
+
+[sub_resource type="Theme" id="Theme_6ma7k"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ngq0j"]
+shader = ExtResource("2_tbtnr")
+shader_parameter/shake = 0.015
+shader_parameter/noiseQuality = 250.0
+shader_parameter/noiseIntensity = 0.001
+shader_parameter/offsetIntensity = 0.05
+shader_parameter/colorOffsetIntensity = 0.5
+
+[sub_resource type="CameraTexture" id="CameraTexture_nbi2e"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_htrso"]
+shader = ExtResource("4_lf8tu")
+shader_parameter/shake_power = 0.03
+shader_parameter/shake_block_size = 30.5
+shader_parameter/fade = 0.01
+shader_parameter/direction_r = Vector2(1, 0)
+shader_parameter/direction_g = Vector2(0.4, 1)
+shader_parameter/direction_b = Vector2(-0.7, -0.3)
+
+[sub_resource type="CameraTexture" id="CameraTexture_5vwnc"]
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_wbyco"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_wps60"]
+playback_mode = 2
+streams_count = 2
+stream_0/stream = ExtResource("10_n1wv6")
+stream_0/weight = 1.0
+stream_1/stream = ExtResource("11_8ykhc")
+stream_1/weight = 1.0
+
+[node name="Player" type="CharacterBody3D"]
+script = ExtResource("1_rx7fi")
+
+[node name="Default_colision" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_fnahj")
+
+[node name="Default_aparence" type="MeshInstance3D" parent="Default_colision"]
+visible = false
+mesh = SubResource("CapsuleMesh_wb6ju")
+skeleton = NodePath("../..")
+
+[node name="Head" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.7, 0)
+
+[node name="Camera3D" type="Camera3D" parent="Head"]
+fov = 100.0
+
+[node name="DefaultHead_aparence" type="MeshInstance3D" parent="Head"]
+transform = Transform3D(0.75, 0, 0, 0, 0.75, 0, 0, 0, 0.75, 0, 0, 0)
+mesh = SubResource("SphereMesh_aaw2v")
+
+[node name="HUD" type="Node" parent="."]
+
+[node name="Crossair" type="CenterContainer" parent="HUD"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Default_crossair_icon" type="Sprite2D" parent="HUD/Crossair"]
+position = Vector2(576, 324)
+scale = Vector2(0.05, 0.05)
+texture = ExtResource("2_ucwmm")
+
+[node name="Rewind_crossair_icon" type="Sprite2D" parent="HUD/Crossair"]
+visible = false
+position = Vector2(576, 324)
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("4_u0lgh")
+
+[node name="Fordward_crossair_icon" type="Sprite2D" parent="HUD/Crossair"]
+visible = false
+position = Vector2(576, 324)
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("3_scvu6")
+
+[node name="Control" type="Control" parent="HUD"]
+layout_mode = 3
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 1.52588e-05
+offset_top = -88.0
+offset_bottom = -1.0
+grow_horizontal = 2
+grow_vertical = 0
+scale = Vector2(0.771486, -0.980599)
+pivot_offset = Vector2(576, 40)
+theme = SubResource("Theme_6ma7k")
+
+[node name="Life" type="HBoxContainer" parent="HUD/Control"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -205.0
+offset_top = -19.5
+offset_right = 205.0
+offset_bottom = 20.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Life_porc" type="Label" parent="HUD/Control/Life"]
+layout_mode = 2
+size_flags_horizontal = 4
+horizontal_alignment = 1
+
+[node name="Life_bar" type="Label" parent="HUD/Control/Life"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="Kills" type="HBoxContainer" parent="HUD/Control"]
+layout_mode = 2
+anchor_left = 0.134
+anchor_top = 0.67
+anchor_right = 0.134
+anchor_bottom = 0.67
+offset_left = -3.03401
+offset_top = -14.3007
+offset_right = 2.96599
+offset_bottom = 25.6993
+scale = Vector2(0.844456, 0.71446)
+
+[node name="Kill_porc" type="Label" parent="HUD/Control/Kills"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Speed" type="HBoxContainer" parent="HUD/Control"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -425.154
+offset_top = -66.3759
+offset_right = -419.154
+offset_bottom = -43.3759
+grow_horizontal = 2
+grow_vertical = 0
+scale = Vector2(0.776156, 0.97893)
+
+[node name="Label2" type="Label" parent="HUD/Control/Speed"]
+layout_mode = 2
+
+[node name="velocity_num" type="Label" parent="HUD/Control/Speed"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Rewind_effect" type="TextureRect" parent="HUD"]
+visible = false
+material = SubResource("ShaderMaterial_ngq0j")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("CameraTexture_nbi2e")
+
+[node name="Fordward_effect" type="TextureRect" parent="HUD"]
+visible = false
+material = SubResource("ShaderMaterial_htrso")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("CameraTexture_5vwnc")
+
+[node name="Kill_num" type="Label" parent="HUD"]
+offset_left = 248.376
+offset_top = 590.483
+offset_right = 249.376
+offset_bottom = 613.483
+
+[node name="Timers" type="Node" parent="."]
+
+[node name="Big_jump_moment" type="Timer" parent="Timers"]
+wait_time = 0.5
+one_shot = true
+
+[node name="Big_jump_strenght" type="Timer" parent="Timers"]
+wait_time = 0.05
+
+[node name="Stap_timer" type="Timer" parent="Timers"]
+wait_time = 0.35
+one_shot = true
+
+[node name="Animation" type="AnimationPlayer" parent="."]
+reset_on_save = false
+libraries = {
+"": SubResource("AnimationLibrary_wbyco")
+}
+speed_scale = 0.3
+
+[node name="SFX" type="Node" parent="."]
+
+[node name="jump_sound" type="AudioStreamPlayer" parent="SFX"]
+stream = ExtResource("7_boq1b")
+volume_db = -6.0
+pitch_scale = 1.8
+
+[node name="big_fall_sound" type="AudioStreamPlayer" parent="SFX"]
+stream = ExtResource("8_l65wn")
+volume_db = -7.0
+
+[node name="big_jump_sound" type="AudioStreamPlayer" parent="SFX"]
+stream = ExtResource("7_boq1b")
+volume_db = -6.0
+pitch_scale = 1.5
+
+[node name="dash_sound" type="AudioStreamPlayer" parent="SFX"]
+stream = ExtResource("9_wvo7y")
+volume_db = -4.0
+
+[node name="big_dash_sound" type="AudioStreamPlayer" parent="SFX"]
+stream = ExtResource("10_rrl1p")
+volume_db = -7.0
+
+[node name="walking_sound" type="AudioStreamPlayer" parent="SFX"]
+stream = SubResource("AudioStreamRandomizer_wps60")
+volume_db = -15.0
+pitch_scale = 0.75
+
+[connection signal="timeout" from="Timers/Big_jump_strenght" to="." method="_on_big_jump_strenght_timeout"]
