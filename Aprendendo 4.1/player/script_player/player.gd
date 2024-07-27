@@ -1,6 +1,7 @@
 class_name Player extends CharacterBody3D
 #Int/Float Values
 var volume = 1
+var floor_sliding = false
 var running = false
 var preserved_speed = Vector3.ZERO
 var dash_count = 1
@@ -154,7 +155,9 @@ func _process(delta):
 		jump_strength = 5
 
 func _physics_process(delta):
-	
+	$HUD/Label.text = "%s" % (preserved_speed.x)
+	preserved_speed.x = velocity.x
+	preserved_speed.z = velocity.z 
 	#gravity
 	if not is_on_floor():
 		velocity.y -= gravity * delta
@@ -186,18 +189,20 @@ func _physics_process(delta):
 		$SFX/jump_sound.play()
 	
 	#crouch
-	if Input.is_action_just_pressed("Ctrl") and Input.is_action_pressed("W") and is_on_floor():
-		default_body.scale.y = 0.5
-		head.position.y = 0.4
-		camera.position.z = 0.2
-		camera.position.y = 0.2
-		crouch = true
-		crouching = false
-		if sound_floor_sliding:
-			preserved_speed.x = velocity.x
-			preserved_speed.z = velocity.z 
-			$SFX/floor_slide.play()
-			sound_floor_sliding = false
+	if Input.is_action_just_pressed("Ctrl") and Input.is_action_pressed("W") and is_on_floor() or head_check.is_colliding():
+			velocity.y = -9
+			default_body.scale.y = 0.5
+			head.position.y = 0.4
+			camera.position.z = 0.2
+			camera.position.y = 0.2
+			floor_sliding = true
+			crouch = true
+			crouching = false
+			if head_check.is_colliding() and !Input.is_action_pressed("Ctrl"):
+				crouching = true
+			if sound_floor_sliding and floor_sliding:
+				$SFX/floor_slide.play()
+				sound_floor_sliding = false
 	elif crouch and (Input.is_action_just_released("Ctrl") or Input.is_action_just_pressed("Space")):
 			crouching = true
 	if crouching and !head_check.is_colliding():
@@ -207,6 +212,7 @@ func _physics_process(delta):
 		default_body.scale.y = 1
 		head.position.y = 1.4
 		volume = 1
+		crouching = false
 	
 	#fast_fall and big_jump_moment
 	if Input.is_action_just_pressed("Ctrl") and not is_on_floor() and !sliding:
@@ -222,7 +228,7 @@ func _physics_process(delta):
 		camera.transform.origin = _headplayer(t_player)
 	
 	#jump and big_jump
-	if Input.is_action_pressed("Space") and is_on_floor(): 
+	if Input.is_action_pressed("Space") and is_on_floor() and !head_check.is_colliding(): 
 		if big_jump_moment.time_left> 0:
 			velocity.y = clamp(jump_strength + ms, jump_strength+1, 20)
 			$SFX/jump_sound.set_pitch_scale(1.8)
@@ -279,17 +285,18 @@ func _physics_process(delta):
 			$SFX/floor_slide.set_volume_db(volume+5)
 			$SFX/floor_slide.set_pitch_scale((volume/7)+1)
 			volume = lerp(volume, volume * -1, delta * 0.5) -0.1
-			$HUD/Label.text = "%s" % (volume)
 		else:
 			velocity.x = lerp(velocity.x, direction.x * speed, delta * 10)
 			velocity.z = lerp(velocity.z, direction.z * speed, delta * 10)
-	else:
+	elif !is_on_floor():
 		velocity.x = lerp(velocity.x, direction.x * speed, delta * 4)
 		velocity.z = lerp(velocity.z, direction.z * speed, delta * 4)
+	
 	# head player
 	if !crouch:
 		t_player += delta * velocity.length() * float(is_on_floor()) 
 		camera.transform.origin = _headplayer(t_player)
+	
 	# fov
 	var velocity_clamped = clamp(velocity.length(), 0.5, speed )
 	var target_fov = base_fov + fov_change * velocity_clamped

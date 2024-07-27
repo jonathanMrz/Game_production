@@ -160,10 +160,10 @@ texture_under = ExtResource("9_to4oq")
 texture_progress = ExtResource("10_ctf50")
 
 [node name="Label" type="Label" parent="HUD"]
-offset_left = 1063.0
-offset_top = 614.0
-offset_right = 1093.0
-offset_bottom = 637.0
+offset_left = 833.0
+offset_top = 555.0
+offset_right = 863.0
+offset_bottom = 578.0
 scale = Vector2(1.73498, 1.06578)
 
 [node name="Timers" type="Node" parent="."]
