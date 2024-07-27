@@ -9,5 +9,3 @@ func play_music(value):
 
 func music_pitch(value):
 	music.set_pitch_scale(value)
-
-	

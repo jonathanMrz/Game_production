@@ -1,0 +1,180 @@
+[gd_scene load_steps=23 format=3 uid="uid://dedvpl02v5jn0"]
+
+[ext_resource type="PackedScene" uid="uid://ls1l2ut2f0cx" path="res://player/player.tscn" id="1_ngf0k"]
+[ext_resource type="Script" path="res://script/prologo.gd" id="1_sb6kx"]
+[ext_resource type="Texture2D" uid="uid://bwgpjwqsgf4r1" path="res://texture/Fordward_bar_less.png" id="4_fxxku"]
+[ext_resource type="Shader" path="res://texture/shader/portal.gdshader" id="5_lucu8"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_oglog"]
+sky_top_color = Color(1, 1, 1, 1)
+sky_horizon_color = Color(0.278431, 0.286275, 0.294118, 1)
+sky_cover_modulate = Color(0.227451, 0.227451, 0.227451, 1)
+ground_horizon_color = Color(0.109804, 0.109804, 0.117647, 1)
+
+[sub_resource type="Sky" id="Sky_yaj5w"]
+sky_material = SubResource("ProceduralSkyMaterial_oglog")
+
+[sub_resource type="Environment" id="Environment_a1v7d"]
+background_mode = 2
+sky = SubResource("Sky_yaj5w")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_odx51"]
+albedo_texture = ExtResource("4_fxxku")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_4ggth"]
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_2ogl0"]
+data = PackedVector3Array(1, 0, 1, -1, 0, 1, 1, 0, -1, -1, 0, 1, -1, 0, -1, 1, 0, -1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_08o76"]
+albedo_texture = ExtResource("4_fxxku")
+
+[sub_resource type="PrismMesh" id="PrismMesh_ds5j1"]
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_qhhw6"]
+data = PackedVector3Array(0, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, 0, 0.5, 0.5, 0, 0.5, -0.5, 0.5, -0.5, 0.5, 0, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, 0, 0.5, -0.5, 0, 0.5, 0.5, -0.5, -0.5, -0.5, 0, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, -0.5)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_8452q"]
+render_priority = 0
+shader = ExtResource("5_lucu8")
+shader_parameter/base_color = Color(0, 0.5, 1, 1)
+shader_parameter/pulse_color = Color(0.5, 0.7, 1, 1)
+shader_parameter/speed = 1.0
+shader_parameter/scale = 1.0
+shader_parameter/distortion = 1.0
+shader_parameter/shield_power = 0.8
+shader_parameter/rim_power = 2.0
+shader_parameter/pulse_frequency = 2.0
+
+[sub_resource type="SphereMesh" id="SphereMesh_mw1kt"]
+material = SubResource("ShaderMaterial_8452q")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_lv0fg"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cr13i"]
+transparency = 1
+blend_mode = 3
+cull_mode = 1
+albedo_color = Color(0, 0, 0, 1)
+roughness = 0.5
+emission_enabled = true
+emission = Color(1, 1, 1, 1)
+emission_energy_multiplier = 0.5
+clearcoat_roughness = 1.0
+anisotropy = 1.0
+subsurf_scatter_strength = 1.0
+backlight = Color(1, 1, 1, 1)
+refraction_scale = 1.0
+distance_fade_max_distance = 5.0
+
+[sub_resource type="BoxMesh" id="BoxMesh_dmt8i"]
+
+[sub_resource type="Curve3D" id="Curve3D_jotsu"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 5.25339, 3.39689, 13.0508, 0, 0, 0, 0, 0, 0, -7.86707, 3.49235, 12.9799),
+"tilts": PackedFloat32Array(0, 0)
+}
+point_count = 2
+
+[sub_resource type="BoxMesh" id="BoxMesh_pf1n6"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_ka2x1"]
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_r1oxd"]
+data = PackedVector3Array(-0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, -0.5)
+
+[node name="Prologo" type="Node3D"]
+script = ExtResource("1_sb6kx")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866024, -0.433016, 0.250001, 0, 0.499998, 0.866026, -0.500003, 0.749999, -0.43301, 0, 9.0566, -31.3624)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_a1v7d")
+
+[node name="Player" parent="." instance=ExtResource("1_ngf0k")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 34.4644, 14.0746)
+
+[node name="Flood_default" type="MeshInstance3D" parent="."]
+transform = Transform3D(16.9591, 0, 0, 0, 1, 0, 0, 0, 16.9591, 0, 0, 0)
+material_override = SubResource("StandardMaterial3D_odx51")
+mesh = SubResource("PlaneMesh_4ggth")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Flood_default"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Flood_default/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_2ogl0")
+
+[node name="Prism" type="MeshInstance3D" parent="."]
+transform = Transform3D(40, 0, 0, 0, 40, 0, 0, 0, 40, -2.22521, 15.3942, 40.45)
+material_override = SubResource("StandardMaterial3D_08o76")
+mesh = SubResource("PrismMesh_ds5j1")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Prism"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Prism/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_qhhw6")
+
+[node name="Portal" type="MeshInstance3D" parent="."]
+transform = Transform3D(2.3, 0, 0, 0, 5.38067, 0, 0, 0, 5.75703, -12.6084, 2.6289, 0)
+mesh = SubResource("SphereMesh_mw1kt")
+
+[node name="Portal_light" type="OmniLight3D" parent="Portal"]
+transform = Transform3D(0.434783, 0, 0, 0, 0.18585, 0, 0, 0, 0.173701, -0.275528, -0.091718, 0.0411152)
+light_color = Color(0.247059, 0, 0.635294, 1)
+light_energy = 30.0
+distance_fade_begin = 4096.0
+distance_fade_length = 4096.0
+omni_range = 4.494
+
+[node name="SpotLight3D" type="SpotLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.502477, 0.864591, 0, -0.864591, 0.502477, -0.0285292, 7.62716, -7.25154)
+light_energy = 16.0
+light_indirect_energy = 16.0
+light_volumetric_fog_energy = 2.0
+spot_range = 19.008
+spot_angle = 66.5699
+
+[node name="Area3D" type="Area3D" parent="."]
+transform = Transform3D(8, 0, 0, 0, 8, 0, 0, 0, 8, 22.16, 0, 0)
+gravity_space_override = 1
+gravity_point = true
+gravity = -32.0
+linear_damp_space_override = 1
+angular_damp_space_override = 1
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("BoxShape3D_lv0fg")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Area3D/CollisionShape3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.375997, 0)
+material_override = SubResource("StandardMaterial3D_cr13i")
+visibility_range_end = 20.0
+visibility_range_end_margin = 20.0
+visibility_range_fade_mode = 1
+mesh = SubResource("BoxMesh_dmt8i")
+
+[node name="Path3D" type="Path3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.47006, 2.33146, 3.01674)
+curve = SubResource("Curve3D_jotsu")
+
+[node name="PathFollow3D" type="PathFollow3D" parent="Path3D"]
+transform = Transform3D(0.00540367, 0.00727528, 0.999959, -1.99838e-06, 0.999974, -0.00727537, -0.999985, 3.73155e-05, 0.00540354, -7.86707, 3.49235, 12.9799)
+progress = 13.121
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Path3D/PathFollow3D"]
+mesh = SubResource("BoxMesh_pf1n6")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(7.88912, 0, 0, 0, 1.66338, 0, 0, 0, 7.87368, -6.83123, 2.1296, -12.3795)
+mesh = SubResource("BoxMesh_ka2x1")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_r1oxd")
+
+[connection signal="body_entered" from="Area3D" to="Player" method="_on_area_3d_body_entered"]
+[connection signal="body_exited" from="Area3D" to="Player" method="_on_area_3d_body_exited"]

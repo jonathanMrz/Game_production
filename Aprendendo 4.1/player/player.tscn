@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://ls1l2ut2f0cx"]
+[gd_scene load_steps=29 format=3 uid="uid://ls1l2ut2f0cx"]
 
 [ext_resource type="Script" path="res://player/script_player/player.gd" id="1_rx7fi"]
 [ext_resource type="Shader" path="res://texture/shader/time_rewind_shader.gdshader" id="2_tbtnr"]
@@ -6,20 +6,25 @@
 [ext_resource type="Texture2D" uid="uid://djjdih25h7sra" path="res://texture/crossair/time_speed_crossair.png" id="3_scvu6"]
 [ext_resource type="Shader" path="res://texture/shader/timer_speed_shader.gdshader" id="4_lf8tu"]
 [ext_resource type="Texture2D" uid="uid://cqkodyqdurirg" path="res://texture/crossair/time_rewind_crossair.png" id="4_u0lgh"]
+[ext_resource type="Texture2D" uid="uid://bwgpjwqsgf4r1" path="res://texture/Fordward_bar_less.png" id="7_7aani"]
 [ext_resource type="AudioStream" uid="uid://dot0px8gaf284" path="res://sound/sfx/jump_sound.mp3" id="7_boq1b"]
+[ext_resource type="Texture2D" uid="uid://frjox7541pye" path="res://texture/Fordward_bar_full.png" id="8_2wacd"]
 [ext_resource type="AudioStream" uid="uid://dy152fo78j8qw" path="res://sound/sfx/land.mp3" id="8_l65wn"]
+[ext_resource type="Texture2D" uid="uid://c2ligcdcp7n8e" path="res://texture/Rewind_bar_less.png" id="9_to4oq"]
 [ext_resource type="AudioStream" uid="uid://dbde072kx466q" path="res://sound/sfx/dash_1.mp3" id="9_wvo7y"]
+[ext_resource type="Texture2D" uid="uid://bcojcyfyyaeu3" path="res://texture/Rewind_bar_full.png" id="10_ctf50"]
 [ext_resource type="AudioStream" uid="uid://ctf45cw7y10p6" path="res://sound/sfx/stap1.mp3" id="10_n1wv6"]
-[ext_resource type="AudioStream" path="res://sound/sfx/dash.mp3" id="10_rrl1p"]
+[ext_resource type="AudioStream" uid="uid://csr55e6lg0qdx" path="res://sound/sfx/dash.mp3" id="10_rrl1p"]
 [ext_resource type="AudioStream" uid="uid://f6luk8ft6rwe" path="res://sound/sfx/stap2.mp3" id="11_8ykhc"]
+[ext_resource type="AudioStream" uid="uid://cmkhg1lrsc3ur" path="res://sound/sfx/alert1.mp3" id="17_hc0rl"]
+[ext_resource type="AudioStream" uid="uid://dg7abdapvvdyf" path="res://sound/sfx/alert2.mp3" id="17_o6q60"]
+[ext_resource type="AudioStream" uid="uid://335hv8v3dkjh" path="res://sound/sfx/wall_slid.mp3" id="19_byri2"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_fnahj"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_wb6ju"]
 
 [sub_resource type="SphereMesh" id="SphereMesh_aaw2v"]
-
-[sub_resource type="Theme" id="Theme_6ma7k"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ngq0j"]
 shader = ExtResource("2_tbtnr")
@@ -63,6 +68,10 @@ visible = false
 mesh = SubResource("CapsuleMesh_wb6ju")
 skeleton = NodePath("../..")
 
+[node name="Head_check" type="RayCast3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1.28536, 0, 0, 0, 1, 0, 0.445734, 0)
+target_position = Vector3(0, 1, 0)
+
 [node name="Head" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.7, 0)
 
@@ -71,6 +80,7 @@ fov = 100.0
 
 [node name="DefaultHead_aparence" type="MeshInstance3D" parent="Head"]
 transform = Transform3D(0.75, 0, 0, 0, 0.75, 0, 0, 0, 0.75, 0, 0, 0)
+visible = false
 mesh = SubResource("SphereMesh_aaw2v")
 
 [node name="HUD" type="Node" parent="."]
@@ -99,83 +109,6 @@ position = Vector2(576, 324)
 scale = Vector2(0.1, 0.1)
 texture = ExtResource("3_scvu6")
 
-[node name="Control" type="Control" parent="HUD"]
-layout_mode = 3
-anchors_preset = 12
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 1.52588e-05
-offset_top = -88.0
-offset_bottom = -1.0
-grow_horizontal = 2
-grow_vertical = 0
-scale = Vector2(0.771486, -0.980599)
-pivot_offset = Vector2(576, 40)
-theme = SubResource("Theme_6ma7k")
-
-[node name="Life" type="HBoxContainer" parent="HUD/Control"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -205.0
-offset_top = -19.5
-offset_right = 205.0
-offset_bottom = 20.5
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="Life_porc" type="Label" parent="HUD/Control/Life"]
-layout_mode = 2
-size_flags_horizontal = 4
-horizontal_alignment = 1
-
-[node name="Life_bar" type="Label" parent="HUD/Control/Life"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 4
-
-[node name="Kills" type="HBoxContainer" parent="HUD/Control"]
-layout_mode = 2
-anchor_left = 0.134
-anchor_top = 0.67
-anchor_right = 0.134
-anchor_bottom = 0.67
-offset_left = -3.03401
-offset_top = -14.3007
-offset_right = 2.96599
-offset_bottom = 25.6993
-scale = Vector2(0.844456, 0.71446)
-
-[node name="Kill_porc" type="Label" parent="HUD/Control/Kills"]
-unique_name_in_owner = true
-layout_mode = 2
-
-[node name="Speed" type="HBoxContainer" parent="HUD/Control"]
-layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -425.154
-offset_top = -66.3759
-offset_right = -419.154
-offset_bottom = -43.3759
-grow_horizontal = 2
-grow_vertical = 0
-scale = Vector2(0.776156, 0.97893)
-
-[node name="Label2" type="Label" parent="HUD/Control/Speed"]
-layout_mode = 2
-
-[node name="velocity_num" type="Label" parent="HUD/Control/Speed"]
-unique_name_in_owner = true
-layout_mode = 2
-
 [node name="Rewind_effect" type="TextureRect" parent="HUD"]
 visible = false
 material = SubResource("ShaderMaterial_ngq0j")
@@ -196,11 +129,42 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = SubResource("CameraTexture_5vwnc")
 
-[node name="Kill_num" type="Label" parent="HUD"]
-offset_left = 248.376
-offset_top = 590.483
-offset_right = 249.376
-offset_bottom = 613.483
+[node name="Control" type="Control" parent="HUD"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Fordward_bar" type="TextureProgressBar" parent="HUD/Control"]
+layout_mode = 0
+offset_left = 150.0
+offset_top = 575.0
+offset_right = 250.0
+offset_bottom = 625.0
+max_value = 500.0
+value = 100.0
+nine_patch_stretch = true
+texture_under = ExtResource("7_7aani")
+texture_progress = ExtResource("8_2wacd")
+
+[node name="Rewind_bar" type="TextureProgressBar" parent="HUD/Control"]
+layout_mode = 0
+offset_left = 28.0
+offset_top = 580.0
+offset_right = 128.0
+offset_bottom = 630.0
+max_value = 500.0
+value = 100.0
+nine_patch_stretch = true
+texture_under = ExtResource("9_to4oq")
+texture_progress = ExtResource("10_ctf50")
+
+[node name="Label" type="Label" parent="HUD"]
+offset_left = 1063.0
+offset_top = 614.0
+offset_right = 1093.0
+offset_bottom = 637.0
+scale = Vector2(1.73498, 1.06578)
 
 [node name="Timers" type="Node" parent="."]
 
@@ -213,6 +177,14 @@ wait_time = 0.05
 
 [node name="Stap_timer" type="Timer" parent="Timers"]
 wait_time = 0.35
+one_shot = true
+
+[node name="Wait_Timer_fordward" type="Timer" parent="Timers"]
+wait_time = 2.0
+one_shot = true
+
+[node name="Wait_Timer_rewind" type="Timer" parent="Timers"]
+wait_time = 3.0
 one_shot = true
 
 [node name="Animation" type="AnimationPlayer" parent="."]
@@ -249,6 +221,20 @@ volume_db = -7.0
 [node name="walking_sound" type="AudioStreamPlayer" parent="SFX"]
 stream = SubResource("AudioStreamRandomizer_wps60")
 volume_db = -15.0
-pitch_scale = 0.75
+pitch_scale = 0.65
+
+[node name="alert" type="AudioStreamPlayer" parent="SFX"]
+stream = ExtResource("17_hc0rl")
+volume_db = -30.0
+
+[node name="alert2" type="AudioStreamPlayer" parent="SFX"]
+stream = ExtResource("17_o6q60")
+volume_db = -20.0
+
+[node name="wall_slide" type="AudioStreamPlayer" parent="SFX"]
+stream = ExtResource("19_byri2")
+
+[node name="floor_slide" type="AudioStreamPlayer" parent="SFX"]
+stream = ExtResource("19_byri2")
 
 [connection signal="timeout" from="Timers/Big_jump_strenght" to="." method="_on_big_jump_strenght_timeout"]

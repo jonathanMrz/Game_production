@@ -1,19 +1,26 @@
 class_name Player extends CharacterBody3D
 #Int/Float Values
+var volume = 1
+var running = false
+var preserved_speed = Vector3.ZERO
 var dash_count = 1
 var wall_jump = 4
 var weapon_select = 0
 var ms = 0
-var rewind_duraction = 999
+var rewind_duraction = 99
 var sensitive = 0.005
 var speed = 10
 var jump_strength = 5
 var gravity = 9.8
 #Bool Values True/False
+var sound_floor_sliding = true
+var sound_wall_sliding = true
+var crouching = false
+var crouch = false
 var sliding = false
 var big_jump = false
 var dash = false
-var abilit_select = false
+var abilit_select = 0
 var fordward = false
 @export var rewind = false
 var rewindvalue = {"position":[],"velocity":[],"rotation_x":[],"rotation_y":[]}
@@ -24,6 +31,7 @@ var direction = Vector3.ZERO
 @onready var head = $Head
 @onready var camera = $Head/Camera3D
 @onready var default_body = $Default_colision
+@onready var head_check = $Head_check
 #Timers
 @onready var big_jump_moment = $Timers/Big_jump_moment
 @onready var big_jump_strenght = $Timers/Big_jump_strenght
@@ -33,11 +41,17 @@ const player_amp = 0.1
 var t_player = 0.0
 const base_fov = 100.0
 const fov_change = 2
+#ability
+@onready var fordward_bar = $HUD/Control/Fordward_bar 
+var regen_ability1 = false
+var wait1 = true
+@onready var rewind_bar = $HUD/Control/Rewind_bar
+var regen_ability2 = false
+var wait2 = true
 
 #Event funcs
 func _ready():
-	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED);
-		
+	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 
 func _unhandled_input(event):
 	if event is InputEventMouseMotion and !rewind:
@@ -50,18 +64,18 @@ func _unhandled_input(event):
 
 func _input(event):
 	#ability selection
-	if Input.is_action_just_pressed("Q"):
-		if !abilit_select:
-			abilit_select = true
-		elif abilit_select:
-			abilit_select = false
+	if Input.is_action_just_pressed("Q") or Input.is_action_just_pressed("E"):
+		if abilit_select == 0:
+			abilit_select += 1
+		elif abilit_select == 1:
+			abilit_select -=1
 	
 	#abilitys event
 	if Input.is_action_pressed("M2"):
-		if abilit_select and rewindvalue["rotation_x"] != null:
+		if abilit_select == 1 and rewindvalue["rotation_x"] != null and rewind_bar.value != 0:
 			rewind = true
 			fordward = false
-		if !abilit_select:
+		if abilit_select == 0 and fordward_bar.value != 0:
 			rewind = false
 			fordward = true
 	elif Input.is_action_just_released("M2"):
@@ -69,13 +83,45 @@ func _input(event):
 		fordward = false
 		music_controller.music_pitch(1.00)
 
+
 #Process funcs
 func _process(delta):
+	if fordward_bar.value == 0:
+		fordward = false
+	if regen_ability1:
+		fordward_bar.value += 0.5
+		if fordward_bar.value >= fordward_bar.max_value:
+			regen_ability1 = false
+			$SFX/alert2.set_pitch_scale(1)
+			$SFX/alert2.play()
+	if rewind_bar.value == 0 :
+		rewind = false
+	if regen_ability2:
+		rewind_bar.value += 0.5
+		if rewind_bar.value >= rewind_bar.max_value:
+			regen_ability2 = false
+			$SFX/alert2.set_pitch_scale(0.7)
+			$SFX/alert2.play()
+	
 	#rewind process
 	if rewind :
 		rewind_process(delta)
 	elif !rewind:
-		if 99 * Engine.get_frames_per_second() == rewindvalue["position"].size():
+		if rewind_bar.value > 0:
+			if rewind_bar.value < rewind_bar.max_value:
+				regen_ability2 = true
+			elif rewind_bar.value >= rewind_bar.max_value: 
+				regen_ability2 = false
+		elif rewind_bar.value == 0 and wait2:
+			$SFX/alert.set_pitch_scale(0.7)
+			$SFX/alert.play()
+			wait2 = false
+			$Timers/Wait_Timer_rewind.start()
+		elif $Timers/Wait_Timer_rewind.time_left <= 0:
+			wait2 = true
+			regen_ability2 = true
+		
+		if 999 * Engine.get_frames_per_second() == rewindvalue["position"].size():
 			for key in rewindvalue.keys():
 				rewindvalue[key].pop_front()
 		rewindvalue["position"].append(global_position)
@@ -88,6 +134,19 @@ func _process(delta):
 	if fordward:
 		fordward_process(delta)
 	elif !fordward:
+		if fordward_bar.value != 0:
+			if fordward_bar.value <fordward_bar.max_value:
+				regen_ability1 = true
+			elif fordward_bar.value >= fordward_bar.max_value:
+				regen_ability1 = false
+		elif fordward_bar.value == 0 and wait1:
+			wait1 = false
+			$SFX/alert.set_pitch_scale(1)
+			$SFX/alert.play()
+			$Timers/Wait_Timer_fordward.start()
+		elif $Timers/Wait_Timer_fordward.time_left <= 0:
+			wait1 = true
+			regen_ability1 = true
 		$Timers/Stap_timer.set_wait_time(0.35)
 		$HUD/Crossair/Fordward_crossair_icon.call_deferred("set_visible",false)
 		fordward_effect.call_deferred("set_visible",false)
@@ -102,18 +161,52 @@ func _physics_process(delta):
 	
 	# wall_sliding and wall_jumP
 	if Input.is_action_pressed("Space") and is_on_wall_only():
+		big_jump = false
 		velocity.y=- 2
 		velocity.x = 0
 		velocity.z = 0
 		sliding = true
 		big_jump_strenght.stop()
+		volume = lerp(volume, volume * 1, delta * 0.5) +0.1
+		$SFX/wall_slide.set_volume_db(clamp(volume-5,-3,3))
+		if sound_wall_sliding:
+			volume = 1
+			$SFX/wall_slide.play()
+			sound_wall_sliding = false
 	else:
 		sliding = false
+		sound_wall_sliding = true
+		$SFX/wall_slide.stop()
 	if Input.is_action_just_released("Space") and is_on_wall_only() and wall_jump > 0:
 		velocity = clamp(get_wall_normal(),Vector3(-1,0,-1),Vector3(1,0,1)) * jump_strength * 2
 		velocity.y += jump_strength + 1.5
 		sliding = false
 		wall_jump -=1
+		$SFX/jump_sound.set_pitch_scale(2.5)
+		$SFX/jump_sound.play()
+	
+	#crouch
+	if Input.is_action_just_pressed("Ctrl") and Input.is_action_pressed("W") and is_on_floor():
+		default_body.scale.y = 0.5
+		head.position.y = 0.4
+		camera.position.z = 0.2
+		camera.position.y = 0.2
+		crouch = true
+		crouching = false
+		if sound_floor_sliding:
+			preserved_speed.x = velocity.x
+			preserved_speed.z = velocity.z 
+			$SFX/floor_slide.play()
+			sound_floor_sliding = false
+	elif crouch and (Input.is_action_just_released("Ctrl") or Input.is_action_just_pressed("Space")):
+			crouching = true
+	if crouching and !head_check.is_colliding():
+		sound_floor_sliding=true
+		$SFX/floor_slide.stop()
+		crouch = false
+		default_body.scale.y = 1
+		head.position.y = 1.4
+		volume = 1
 	
 	#fast_fall and big_jump_moment
 	if Input.is_action_just_pressed("Ctrl") and not is_on_floor() and !sliding:
@@ -123,8 +216,6 @@ func _physics_process(delta):
 		velocity.y -= 40
 	elif big_jump and is_on_floor():
 		camera.fov = 97.5
-		velocity.x = 0
-		velocity.z = 0
 		big_jump_moment.start()
 		big_jump=false
 		$SFX/big_fall_sound.play()
@@ -133,7 +224,8 @@ func _physics_process(delta):
 	#jump and big_jump
 	if Input.is_action_pressed("Space") and is_on_floor(): 
 		if big_jump_moment.time_left> 0:
-			velocity.y = clamp(jump_strength + ms, jump_strength+1, 20) 
+			velocity.y = clamp(jump_strength + ms, jump_strength+1, 20)
+			$SFX/jump_sound.set_pitch_scale(1.8)
 			$SFX/big_jump_sound.play()
 		else:
 			velocity.y = clamp(jump_strength, jump_strength, 10)
@@ -141,6 +233,8 @@ func _physics_process(delta):
 	
 	#dash
 	if Input.is_action_just_pressed("Shift") and dash_count > 0 and not is_on_floor() and not is_on_wall() and (direction.x!=0 or direction.z!=0):
+		if fordward:
+			fordward_bar.value -= 50
 		$SFX/dash_sound.play()
 		dash_count -=1
 		dash = true
@@ -152,34 +246,50 @@ func _physics_process(delta):
 			$SFX/big_dash_sound.play()
 	elif dash and is_on_floor() or dash and is_on_wall():
 		dash_count = 1
-		fordward = false
 		dash = false
 		music_controller.music_pitch(1.00)
 	
-	# basic moviment and direction
+	#running
+	if Input.is_action_pressed("Shift") and is_on_floor():
+		speed = speed * 1.25
+		if !fordward:
+			$Timers/Stap_timer.set_wait_time(0.25)
+		elif fordward:
+			$Timers/Stap_timer.set_wait_time(0.15)
+	
+	# basic moviment and direction and crouch operation
 	var input_dir = Input.get_vector("A", "D", "W", "S")
 	direction = (head.transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 	if is_on_floor():
 		var stap = 0
-		if (direction.z !=0 or direction.x !=0) and $Timers/Stap_timer.time_left <= 0:
+		if !crouch and (direction.z !=0 or direction.x !=0) and $Timers/Stap_timer.time_left <= 0:
 			$SFX/walking_sound.play()
 			$Timers/Stap_timer.start()
 			stap+=1
 		wall_jump = 4
 		big_jump_strenght.stop()
-		if direction:
+		if direction and !crouch:
 			velocity.x = direction.x * speed
 			velocity.z = direction.z * speed
+		elif crouch:
+			preserved_speed.x = lerp(preserved_speed.x, direction.x * 0, delta * 0.5)
+			preserved_speed.z = lerp(preserved_speed.z, direction.z * 0, delta * 0.5)
+			velocity.x = preserved_speed.x
+			velocity.z = preserved_speed.z
+			$SFX/floor_slide.set_volume_db(volume+5)
+			$SFX/floor_slide.set_pitch_scale((volume/7)+1)
+			volume = lerp(volume, volume * -1, delta * 0.5) -0.1
+			$HUD/Label.text = "%s" % (volume)
 		else:
 			velocity.x = lerp(velocity.x, direction.x * speed, delta * 10)
 			velocity.z = lerp(velocity.z, direction.z * speed, delta * 10)
 	else:
 		velocity.x = lerp(velocity.x, direction.x * speed, delta * 4)
 		velocity.z = lerp(velocity.z, direction.z * speed, delta * 4)
-	
 	# head player
-	t_player += delta * velocity.length() * float(is_on_floor()) 
-	camera.transform.origin = _headplayer(t_player)
+	if !crouch:
+		t_player += delta * velocity.length() * float(is_on_floor()) 
+		camera.transform.origin = _headplayer(t_player)
 	# fov
 	var velocity_clamped = clamp(velocity.length(), 0.5, speed )
 	var target_fov = base_fov + fov_change * velocity_clamped
@@ -188,6 +298,8 @@ func _physics_process(delta):
 
 #Other funcs
 func rewind_process(_delta: float):
+	rewind_bar.value -= 5
+	regen_ability2 = false
 	var pos = rewindvalue["position"].pop_back()
 	var vel = rewindvalue["velocity"].pop_back()
 	var rot_x = rewindvalue["rotation_x"].pop_back()
@@ -207,20 +319,17 @@ func rewind_process(_delta: float):
 	velocity.y = 0
 	ms = 0
 	big_jump_strenght.stop()
-	music_controller.music_pitch(0.95)
-
+	music_controller.music_pitch(0.98)
 
 func fordward_process(delta):
-	music_controller.music_pitch(1.05)
+	fordward_bar.value -= 3.5
+	regen_ability1 = false
+	music_controller.music_pitch(1.02)
 	$HUD/Crossair/Fordward_crossair_icon.call_deferred("set_visible",true)
 	fordward_effect.call_deferred("set_visible",true)
 	jump_strength = 6
-	speed = 14
+	speed = 15
 	$Timers/Stap_timer.set_wait_time(0.2)
-
-func _on_big_jump_strenght_timeout():
-	ms +=1.5
-
 
 func _headplayer(time) -> Vector3:
 	var pos = Vector3.ZERO
@@ -228,3 +337,18 @@ func _headplayer(time) -> Vector3:
 	pos.x = sin(time * player_freq/2) * player_amp/2
 	return pos#camera values
 	move_and_slide()
+
+func _on_big_jump_strenght_timeout():
+	ms +=1.5
+
+#Player world reaction
+func _on_area_3d_body_entered(body):
+	velocity.y = 0
+	gravity = 0
+	print("Entrei")
+	pass # Replace with function body.
+
+func _on_area_3d_body_exited(body):
+	gravity = 9.8
+	velocity = direction * 50
+	pass # Replace with function body.
