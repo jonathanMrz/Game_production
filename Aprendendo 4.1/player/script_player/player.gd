@@ -55,7 +55,7 @@ func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 
 func _unhandled_input(event):
-	if event is InputEventMouseMotion and !rewind:
+	if event is InputEventMouseMotion and !rewind and Engine.time_scale !=0:
 		head.rotate_y(-event.relative.x * sensitive)
 		camera.rotate_x(-event.relative.y * sensitive)
 		camera.rotation.x = clamp(camera.rotation.x, deg_to_rad(-45), deg_to_rad(45))
@@ -79,11 +79,10 @@ func _input(event):
 		if abilit_select == 0 and fordward_bar.value != 0:
 			rewind = false
 			fordward = true
-	elif Input.is_action_just_released("M2"):
+	else:
 		rewind = false;
 		fordward = false
 		music_controller.music_pitch(1.00)
-
 
 #Process funcs
 func _process(delta):
@@ -278,8 +277,12 @@ func _physics_process(delta):
 			velocity.x = direction.x * speed
 			velocity.z = direction.z * speed
 		elif crouch:
-			preserved_speed.x = lerp(preserved_speed.x, direction.x * 0, delta * 0.5)
-			preserved_speed.z = lerp(preserved_speed.z, direction.z * 0, delta * 0.5)
+			if !head_check.is_colliding():
+				preserved_speed.x = lerp(preserved_speed.x, direction.x * 0, delta * 0.5)
+				preserved_speed.z = lerp(preserved_speed.z, direction.z * 0, delta * 0.5)
+			elif head_check.is_colliding():
+				preserved_speed.x = lerp(preserved_speed.x, direction.x * 0, delta * -0.5)
+				preserved_speed.z = lerp(preserved_speed.z, direction.z * 0, delta * -0.5)
 			velocity.x = preserved_speed.x
 			velocity.z = preserved_speed.z
 			$SFX/floor_slide.set_volume_db(volume+5)

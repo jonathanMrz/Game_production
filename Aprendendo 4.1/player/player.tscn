@@ -1,6 +1,7 @@
-[gd_scene load_steps=29 format=3 uid="uid://ls1l2ut2f0cx"]
+[gd_scene load_steps=30 format=3 uid="uid://ls1l2ut2f0cx"]
 
 [ext_resource type="Script" path="res://player/script_player/player.gd" id="1_rx7fi"]
+[ext_resource type="Script" path="res://player/hud.gd" id="2_4h548"]
 [ext_resource type="Shader" path="res://texture/shader/time_rewind_shader.gdshader" id="2_tbtnr"]
 [ext_resource type="Texture2D" uid="uid://bd8l8n45f0tqt" path="res://texture/crossair/main_crossair.png" id="2_ucwmm"]
 [ext_resource type="Texture2D" uid="uid://djjdih25h7sra" path="res://texture/crossair/time_speed_crossair.png" id="3_scvu6"]
@@ -84,6 +85,8 @@ visible = false
 mesh = SubResource("SphereMesh_aaw2v")
 
 [node name="HUD" type="Node" parent="."]
+process_mode = 3
+script = ExtResource("2_4h548")
 
 [node name="Crossair" type="CenterContainer" parent="HUD"]
 anchors_preset = 15
@@ -166,6 +169,32 @@ offset_right = 863.0
 offset_bottom = 578.0
 scale = Vector2(1.73498, 1.06578)
 
+[node name="Pause_menu" type="MarginContainer" parent="HUD"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -250.0
+offset_top = -250.0
+offset_right = 250.0
+offset_bottom = 250.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HUD/Pause_menu"]
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="Resume" type="Button" parent="HUD/Pause_menu/VBoxContainer"]
+layout_mode = 2
+text = "Resume
+"
+
+[node name="Quit" type="Button" parent="HUD/Pause_menu/VBoxContainer"]
+layout_mode = 2
+text = "Quit"
+
 [node name="Timers" type="Node" parent="."]
 
 [node name="Big_jump_moment" type="Timer" parent="Timers"]
@@ -237,4 +266,6 @@ stream = ExtResource("19_byri2")
 [node name="floor_slide" type="AudioStreamPlayer" parent="SFX"]
 stream = ExtResource("19_byri2")
 
+[connection signal="pressed" from="HUD/Pause_menu/VBoxContainer/Resume" to="HUD" method="_on_resume_pressed"]
+[connection signal="pressed" from="HUD/Pause_menu/VBoxContainer/Quit" to="HUD" method="_on_quit_pressed"]
 [connection signal="timeout" from="Timers/Big_jump_strenght" to="." method="_on_big_jump_strenght_timeout"]

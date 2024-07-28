@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://dedvpl02v5jn0"]
+[gd_scene load_steps=25 format=3 uid="uid://dedvpl02v5jn0"]
 
 [ext_resource type="PackedScene" uid="uid://ls1l2ut2f0cx" path="res://player/player.tscn" id="1_ngf0k"]
 [ext_resource type="Script" path="res://script/prologo.gd" id="1_sb6kx"]
@@ -84,6 +84,10 @@ point_count = 2
 
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_r1oxd"]
 data = PackedVector3Array(-0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, -0.5)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_bk2ea"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_xajpe"]
 
 [node name="Prologo" type="Node3D"]
 script = ExtResource("1_sb6kx")
@@ -175,6 +179,19 @@ mesh = SubResource("BoxMesh_ka2x1")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D"]
 shape = SubResource("ConcavePolygonShape3D_r1oxd")
+
+[node name="RigidBody3D" type="RigidBody3D" parent="."]
+transform = Transform3D(0.630296, 0.776355, 0, -0.540966, 0.439192, 0.717263, 0.556851, -0.452089, 0.696802, 5.89179, 4.92894, 0)
+mass = 0.01
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -2.98023e-08, 5.96046e-08, 1, 0, 0, 0)
+shape = SubResource("BoxShape3D_bk2ea")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="RigidBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, -2.98023e-08, 2.98023e-08, 1, 0, 0, 0)
+mesh = SubResource("BoxMesh_xajpe")
+skeleton = NodePath("../..")
 
 [connection signal="body_entered" from="Area3D" to="Player" method="_on_area_3d_body_entered"]
 [connection signal="body_exited" from="Area3D" to="Player" method="_on_area_3d_body_exited"]
