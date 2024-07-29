@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://frjox7541pye"
-path="res://.godot/imported/Fordward_bar_full.png-8167df67006554b99847018e89594d82.ctex"
+uid="uid://ceabcoeyvn3ox"
+path="res://.godot/imported/Tiles032.png-2fd76361fa4b7cf95a30142817a2f92e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://texture/Fordward_bar_full.png"
-dest_files=["res://.godot/imported/Fordward_bar_full.png-8167df67006554b99847018e89594d82.ctex"]
+source_file="res://texture/mesh_texture/Tiles032_2K/Tiles032.png"
+dest_files=["res://.godot/imported/Tiles032.png-2fd76361fa4b7cf95a30142817a2f92e.ctex"]
 
 [params]
 

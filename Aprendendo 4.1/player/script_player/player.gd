@@ -1,5 +1,6 @@
 class_name Player extends CharacterBody3D
 #Int/Float Values
+var disable_slide = false
 var volume = 1
 var floor_sliding = false
 var running = false
@@ -154,15 +155,17 @@ func _process(delta):
 		jump_strength = 5
 
 func _physics_process(delta):
-	$HUD/Label.text = "%s" % (preserved_speed.x)
+	$HUD/Label.text = "%s" % (velocity.y)
 	preserved_speed.x = velocity.x
-	preserved_speed.z = velocity.z 
+	preserved_speed.z = velocity.z
+	if velocity.y < 0:
+		disable_slide = false
 	#gravity
 	if not is_on_floor():
 		velocity.y -= gravity * delta
 	
 	# wall_sliding and wall_jumP
-	if Input.is_action_pressed("Space") and is_on_wall_only():
+	if Input.is_action_pressed("Space") and is_on_wall_only() and !disable_slide:
 		big_jump = false
 		velocity.y=- 2
 		velocity.x = 0
@@ -175,20 +178,20 @@ func _physics_process(delta):
 			volume = 1
 			$SFX/wall_slide.play()
 			sound_wall_sliding = false
-	else:
-		sliding = false
-		sound_wall_sliding = true
-		$SFX/wall_slide.stop()
-	if Input.is_action_just_released("Space") and is_on_wall_only() and wall_jump > 0:
+	elif Input.is_action_just_released("Space") and is_on_wall_only() and wall_jump > 0 and !disable_slide:
 		velocity = clamp(get_wall_normal(),Vector3(-1,0,-1),Vector3(1,0,1)) * jump_strength * 2
 		velocity.y += jump_strength + 1.5
 		sliding = false
 		wall_jump -=1
 		$SFX/jump_sound.set_pitch_scale(2.5)
 		$SFX/jump_sound.play()
+	else:
+		sliding = false
+		sound_wall_sliding = true
+		$SFX/wall_slide.stop()
 	
 	#crouch
-	if Input.is_action_just_pressed("Ctrl") and Input.is_action_pressed("W") and is_on_floor() or head_check.is_colliding():
+	if Input.is_action_just_pressed("Ctrl") and Input.is_action_pressed("W") and is_on_floor() or head_check.is_colliding() and is_on_floor():
 			velocity.y = -9
 			default_body.scale.y = 0.5
 			head.position.y = 0.4
@@ -227,7 +230,7 @@ func _physics_process(delta):
 		camera.transform.origin = _headplayer(t_player)
 	
 	#jump and big_jump
-	if Input.is_action_pressed("Space") and is_on_floor() and !head_check.is_colliding(): 
+	if Input.is_action_just_pressed("Space") and is_on_floor() and !head_check.is_colliding(): 
 		if big_jump_moment.time_left> 0:
 			velocity.y = clamp(jump_strength + ms, jump_strength+1, 20)
 			$SFX/jump_sound.set_pitch_scale(1.8)
@@ -235,6 +238,7 @@ func _physics_process(delta):
 		else:
 			velocity.y = clamp(jump_strength, jump_strength, 10)
 			$SFX/jump_sound.play()
+		disable_slide = true
 	
 	#dash
 	if Input.is_action_just_pressed("Shift") and dash_count > 0 and not is_on_floor() and not is_on_wall() and (direction.x!=0 or direction.z!=0):
@@ -267,7 +271,7 @@ func _physics_process(delta):
 	direction = (head.transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 	if is_on_floor():
 		var stap = 0
-		if !crouch and (direction.z !=0 or direction.x !=0) and $Timers/Stap_timer.time_left <= 0:
+		if !is_on_wall() and !crouch and (direction.z !=0 or direction.x !=0) and $Timers/Stap_timer.time_left <= 0:
 			$SFX/walking_sound.play()
 			$Timers/Stap_timer.start()
 			stap+=1
@@ -296,13 +300,14 @@ func _physics_process(delta):
 		velocity.z = lerp(velocity.z, direction.z * speed, delta * 4)
 	
 	# head player
-	if !crouch:
+	if !is_on_wall() and !crouch:
 		t_player += delta * velocity.length() * float(is_on_floor()) 
 		camera.transform.origin = _headplayer(t_player)
 	
 	# fov
 	var velocity_clamped = clamp(velocity.length(), 0.5, speed )
 	var target_fov = base_fov + fov_change * velocity_clamped
+	camera.fov = 100
 	camera.fov = lerp(camera.fov, target_fov, delta * 8.0)
 	move_and_slide()
 

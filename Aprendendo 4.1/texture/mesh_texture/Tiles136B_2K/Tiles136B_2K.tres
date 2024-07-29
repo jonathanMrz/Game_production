@@ -1,0 +1,19 @@
+[gd_resource type="StandardMaterial3D" load_steps=5 format=3 uid="uid://3wtxl0dulkwy"]
+
+[ext_resource type="Texture2D" uid="uid://dda2cgjymvd76" path="res://texture/mesh_texture/Tiles136B_2K/Tiles136B_2K-JPG_Color.jpg" id="1_r0k1v"]
+[ext_resource type="Texture2D" uid="uid://duk4pnvq4f8vf" path="res://texture/mesh_texture/Tiles136B_2K/Tiles136B_2K-JPG_AmbientOcclusion.jpg" id="2_2oj6s"]
+[ext_resource type="Texture2D" uid="uid://buycwpb6jterp" path="res://texture/mesh_texture/Tiles136B_2K/Tiles136B_2K-JPG_NormalDX.jpg" id="3_slojy"]
+[ext_resource type="Texture2D" uid="uid://c7mvnoeu4vj1h" path="res://texture/mesh_texture/Tiles136B_2K/Tiles136B_2K-JPG_Roughness.jpg" id="4_ks6ku"]
+
+[resource]
+albedo_texture = ExtResource("1_r0k1v")
+roughness_texture = ExtResource("4_ks6ku")
+normal_enabled = true
+normal_texture = ExtResource("3_slojy")
+ao_enabled = true
+ao_texture = ExtResource("2_2oj6s")
+ao_on_uv2 = true
+refraction_scale = 1.0
+uv1_scale = Vector3(0.5, 0.5, 0.5)
+uv1_triplanar = true
+uv2_triplanar = true

@@ -2,26 +2,27 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dvsqgh8qy84h7"
-path="res://.godot/imported/rewind_sign.png-0a3f369c04c3c7cf565fefb108bcabd1.ctex"
+uid="uid://cobm6cc60h6vl"
+path.s3tc="res://.godot/imported/glicht_texture_bar.jpg-3202339434be5c741b3b099eb251824e.s3tc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
-source_file="res://texture/icon/rewind_sign.png"
-dest_files=["res://.godot/imported/rewind_sign.png-0a3f369c04c3c7cf565fefb108bcabd1.ctex"]
+source_file="res://texture/others/glicht_texture_bar.jpg"
+dest_files=["res://.godot/imported/glicht_texture_bar.jpg-3202339434be5c741b3b099eb251824e.s3tc.ctex"]
 
 [params]
 
-compress/mode=0
+compress/mode=2
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
 compress/normal_map=0
 compress/channel_pack=0
-mipmaps/generate=false
+mipmaps/generate=true
 mipmaps/limit=-1
 roughness/mode=0
 roughness/src_normal=""
@@ -31,4 +32,4 @@ process/normal_map_invert_y=false
 process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
-detect_3d/compress_to=1
+detect_3d/compress_to=0

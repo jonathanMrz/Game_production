@@ -7,13 +7,13 @@
 [ext_resource type="Texture2D" uid="uid://djjdih25h7sra" path="res://texture/crossair/time_speed_crossair.png" id="3_scvu6"]
 [ext_resource type="Shader" path="res://texture/shader/timer_speed_shader.gdshader" id="4_lf8tu"]
 [ext_resource type="Texture2D" uid="uid://cqkodyqdurirg" path="res://texture/crossair/time_rewind_crossair.png" id="4_u0lgh"]
-[ext_resource type="Texture2D" uid="uid://bwgpjwqsgf4r1" path="res://texture/Fordward_bar_less.png" id="7_7aani"]
+[ext_resource type="Texture2D" uid="uid://bwgpjwqsgf4r1" path="res://texture/icon/Fordward_bar_less.png" id="7_7aani"]
 [ext_resource type="AudioStream" uid="uid://dot0px8gaf284" path="res://sound/sfx/jump_sound.mp3" id="7_boq1b"]
-[ext_resource type="Texture2D" uid="uid://frjox7541pye" path="res://texture/Fordward_bar_full.png" id="8_2wacd"]
+[ext_resource type="Texture2D" uid="uid://frjox7541pye" path="res://texture/icon/Fordward_bar_full.png" id="8_2wacd"]
 [ext_resource type="AudioStream" uid="uid://dy152fo78j8qw" path="res://sound/sfx/land.mp3" id="8_l65wn"]
-[ext_resource type="Texture2D" uid="uid://c2ligcdcp7n8e" path="res://texture/Rewind_bar_less.png" id="9_to4oq"]
+[ext_resource type="Texture2D" uid="uid://c2ligcdcp7n8e" path="res://texture/icon/Rewind_bar_less.png" id="9_to4oq"]
 [ext_resource type="AudioStream" uid="uid://dbde072kx466q" path="res://sound/sfx/dash_1.mp3" id="9_wvo7y"]
-[ext_resource type="Texture2D" uid="uid://bcojcyfyyaeu3" path="res://texture/Rewind_bar_full.png" id="10_ctf50"]
+[ext_resource type="Texture2D" uid="uid://bcojcyfyyaeu3" path="res://texture/icon/Rewind_bar_full.png" id="10_ctf50"]
 [ext_resource type="AudioStream" uid="uid://ctf45cw7y10p6" path="res://sound/sfx/stap1.mp3" id="10_n1wv6"]
 [ext_resource type="AudioStream" uid="uid://csr55e6lg0qdx" path="res://sound/sfx/dash.mp3" id="10_rrl1p"]
 [ext_resource type="AudioStream" uid="uid://f6luk8ft6rwe" path="res://sound/sfx/stap2.mp3" id="11_8ykhc"]
@@ -81,7 +81,6 @@ fov = 100.0
 
 [node name="DefaultHead_aparence" type="MeshInstance3D" parent="Head"]
 transform = Transform3D(0.75, 0, 0, 0, 0.75, 0, 0, 0, 0.75, 0, 0, 0)
-visible = false
 mesh = SubResource("SphereMesh_aaw2v")
 
 [node name="HUD" type="Node" parent="."]

@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://buuitha7gqo4v"
-path.s3tc="res://.godot/imported/futuristic_floor_texture.jpg-0aa00631de252747ce93e4cc8683fbb8.s3tc.ctex"
+path.s3tc="res://.godot/imported/futuristic_floor_texture.jpg-3980bb173465580b666d302c327fa0e7.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://texture/futuristic_floor_texture.jpg"
-dest_files=["res://.godot/imported/futuristic_floor_texture.jpg-0aa00631de252747ce93e4cc8683fbb8.s3tc.ctex"]
+source_file="res://texture/others/futuristic_floor_texture.jpg"
+dest_files=["res://.godot/imported/futuristic_floor_texture.jpg-3980bb173465580b666d302c327fa0e7.s3tc.ctex"]
 
 [params]
 

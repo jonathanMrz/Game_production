@@ -1,9 +1,9 @@
 [gd_scene load_steps=25 format=3 uid="uid://dedvpl02v5jn0"]
 
-[ext_resource type="PackedScene" uid="uid://ls1l2ut2f0cx" path="res://player/player.tscn" id="1_ngf0k"]
-[ext_resource type="Script" path="res://script/prologo.gd" id="1_sb6kx"]
-[ext_resource type="Texture2D" uid="uid://bwgpjwqsgf4r1" path="res://texture/Fordward_bar_less.png" id="4_fxxku"]
-[ext_resource type="Shader" path="res://texture/shader/portal.gdshader" id="5_lucu8"]
+[ext_resource type="Script" path="res://script/worlds_script/prologo.gd" id="1_ac1kp"]
+[ext_resource type="PackedScene" uid="uid://ls1l2ut2f0cx" path="res://player/player.tscn" id="2_1q0m0"]
+[ext_resource type="Texture2D" uid="uid://bwgpjwqsgf4r1" path="res://texture/icon/Fordward_bar_less.png" id="3_3f45m"]
+[ext_resource type="Shader" path="res://texture/shader/portal.gdshader" id="4_gvfxm"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_oglog"]
 sky_top_color = Color(1, 1, 1, 1)
@@ -21,7 +21,7 @@ tonemap_mode = 2
 glow_enabled = true
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_odx51"]
-albedo_texture = ExtResource("4_fxxku")
+albedo_texture = ExtResource("3_3f45m")
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_4ggth"]
 
@@ -29,7 +29,7 @@ albedo_texture = ExtResource("4_fxxku")
 data = PackedVector3Array(1, 0, 1, -1, 0, 1, 1, 0, -1, -1, 0, 1, -1, 0, -1, 1, 0, -1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_08o76"]
-albedo_texture = ExtResource("4_fxxku")
+albedo_texture = ExtResource("3_3f45m")
 
 [sub_resource type="PrismMesh" id="PrismMesh_ds5j1"]
 
@@ -38,7 +38,7 @@ data = PackedVector3Array(0, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0, 0.5, 
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_8452q"]
 render_priority = 0
-shader = ExtResource("5_lucu8")
+shader = ExtResource("4_gvfxm")
 shader_parameter/base_color = Color(0, 0.5, 1, 1)
 shader_parameter/pulse_color = Color(0.5, 0.7, 1, 1)
 shader_parameter/speed = 1.0
@@ -90,7 +90,7 @@ data = PackedVector3Array(-0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0
 [sub_resource type="BoxMesh" id="BoxMesh_xajpe"]
 
 [node name="Prologo" type="Node3D"]
-script = ExtResource("1_sb6kx")
+script = ExtResource("1_ac1kp")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.866024, -0.433016, 0.250001, 0, 0.499998, 0.866026, -0.500003, 0.749999, -0.43301, 0, 9.0566, -31.3624)
@@ -98,7 +98,7 @@ transform = Transform3D(-0.866024, -0.433016, 0.250001, 0, 0.499998, 0.866026, -
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_a1v7d")
 
-[node name="Player" parent="." instance=ExtResource("1_ngf0k")]
+[node name="Player" parent="." instance=ExtResource("2_1q0m0")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 34.4644, 14.0746)
 
 [node name="Flood_default" type="MeshInstance3D" parent="."]

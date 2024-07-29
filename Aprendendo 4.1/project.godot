@@ -11,7 +11,6 @@ config_version=5
 [application]
 
 config/name="Aprendendo 4.1"
-run/main_scene="res://prologo.tscn"
 config/features=PackedStringArray("4.2", "Forward Plus")
 config/icon="res://texture/icon.svg"
 

@@ -1,0 +1,35 @@
+[gd_scene load_steps=6 format=3 uid="uid://bi5p4uafrqw8p"]
+
+[ext_resource type="MeshLibrary" uid="uid://bcoj6q7jq1xak" path="res://objects/tileset_server1.tres" id="1_xee5m"]
+[ext_resource type="PackedScene" uid="uid://ls1l2ut2f0cx" path="res://player/player.tscn" id="2_aawhd"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_vw474"]
+sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+
+[sub_resource type="Sky" id="Sky_gfmhl"]
+sky_material = SubResource("ProceduralSkyMaterial_vw474")
+
+[sub_resource type="Environment" id="Environment_12das"]
+background_mode = 2
+sky = SubResource("Sky_gfmhl")
+
+[node name="server_1" type="Node3D"]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.980271, 0.171177, -0.0988285, 0, 0.499998, 0.866027, 0.197658, -0.848941, 0.490133, 0, 0, 0)
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_12das")
+
+[node name="Player" parent="." instance=ExtResource("2_aawhd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.45635, 0)
+
+[node name="GridMap" type="GridMap" parent="."]
+mesh_library = ExtResource("1_xee5m")
+cell_size = Vector3(0.5, 0.5, 0.5)
+data = {
+"cells": PackedInt32Array(5, 65530, 0, 5, 4, 0, 65531, 65530, 0, 65531, 4, 0, 65521, 65530, 0, 65521, 4, 0, 5, 14, 0, 65531, 14, 0, 65521, 14, 0, 15, 14, 0, 15, 4, 0, 15, 65530, 0, 15, 65520, 0, 5, 65520, 0, 65531, 65520, 0, 65521, 65520, 0, 15, 65510, 917506, 10, 65510, 262146, 65521, 65510, 917506, 65526, 65510, 262146, 5, 65510, 917509, 65531, 65510, 917509, 0, 65510, 262149, 131087, 20, 262147, 131077, 20, 262147, 196603, 20, 262147, 196593, 20, 262147, 196587, 16, 1376259, 196587, 6, 1376259, 131093, 16, 1376259, 131093, 6, 1376259, 196587, 65532, 1376259, 131093, 65532, 1376259, 196587, 65522, 1376259, 131093, 65522, 1376259, 131072, 65535, 1, 65536, 65535, 6)
+}
+metadata/_editor_floor_ = Vector3(0, 1, 0)
