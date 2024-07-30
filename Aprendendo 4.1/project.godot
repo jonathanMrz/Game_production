@@ -11,12 +11,18 @@ config_version=5
 [application]
 
 config/name="Aprendendo 4.1"
+run/main_scene="res://worlds/server_1.tscn"
 config/features=PackedStringArray("4.2", "Forward Plus")
 config/icon="res://texture/icon.svg"
 
 [autoload]
 
 music_controller="*res://sound/music_controller.tscn"
+CyclopsAutoload="*res://addons/cyclops_level_builder/cyclops_global_scene.tscn"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/cyclops_level_builder/plugin.cfg")
 
 [importer_defaults]
 

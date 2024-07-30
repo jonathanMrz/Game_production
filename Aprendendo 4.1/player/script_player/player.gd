@@ -205,7 +205,7 @@ func _physics_process(delta):
 			if sound_floor_sliding and floor_sliding:
 				$SFX/floor_slide.play()
 				sound_floor_sliding = false
-	elif crouch and (Input.is_action_just_released("Ctrl") or Input.is_action_just_pressed("Space")):
+	elif crouch and (Input.is_action_just_released("Ctrl") or Input.is_action_just_pressed("Space")) or crouch and !is_on_floor():
 			crouching = true
 	if crouching and !head_check.is_colliding():
 		sound_floor_sliding=true
@@ -215,7 +215,6 @@ func _physics_process(delta):
 		head.position.y = 1.4
 		volume = 1
 		crouching = false
-	
 	#fast_fall and big_jump_moment
 	if Input.is_action_just_pressed("Ctrl") and not is_on_floor() and !sliding:
 		big_jump_strenght.start()
