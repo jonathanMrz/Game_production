@@ -1,0 +1,22 @@
+[gd_resource type="ORMMaterial3D" load_steps=7 format=3 uid="uid://dx6mkvkvbhr31"]
+
+[ext_resource type="Texture2D" uid="uid://byykit5picpef" path="res://texture/mesh_texture/Facade018B_2K/Facade018B_2K-JPG_Color.jpg" id="1_nn64e"]
+[ext_resource type="Texture2D" uid="uid://btv3e03wbkkmh" path="res://texture/mesh_texture/Facade018B_2K/Facade018B_2K-JPG_Roughness.jpg" id="2_8r420"]
+[ext_resource type="Texture2D" uid="uid://blsg6esjifu7w" path="res://texture/mesh_texture/Facade018B_2K/Facade018B_2K-JPG_Metalness.jpg" id="3_gcgr3"]
+[ext_resource type="Texture2D" uid="uid://o4wefnmrpe6e" path="res://texture/mesh_texture/Facade018B_2K/Facade018B_2K-JPG_NormalDX.jpg" id="4_r3b75"]
+[ext_resource type="Texture2D" uid="uid://clhh5k5y6q83e" path="res://texture/mesh_texture/Facade018B_2K/Facade018B_2K-JPG_AmbientOcclusion.jpg" id="5_vfd7p"]
+[ext_resource type="Texture2D" uid="uid://csy3gjieknr3o" path="res://texture/mesh_texture/Facade018B_2K/Facade018B_2K-JPG_Emission.jpg" id="6_js8ak"]
+
+[resource]
+albedo_texture = ExtResource("1_nn64e")
+orm_texture = ExtResource("5_vfd7p")
+emission = Color(1, 1, 1, 1)
+emission_operator = 1
+emission_texture = ExtResource("3_gcgr3")
+normal_enabled = true
+normal_texture = ExtResource("4_r3b75")
+rim_texture = ExtResource("6_js8ak")
+clearcoat_enabled = true
+clearcoat_texture = ExtResource("2_8r420")
+refraction_texture = ExtResource("3_gcgr3")
+uv1_scale = Vector3(0.023, 0.023, 0.023)

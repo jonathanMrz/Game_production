@@ -1,0 +1,14 @@
+[gd_resource type="ORMMaterial3D" load_steps=4 format=3 uid="uid://r0epvld8n3d4"]
+
+[ext_resource type="Texture2D" uid="uid://bhi715u1i47a" path="res://texture/mesh_texture/Road007_2K/Road007_2K-JPG_Color.jpg" id="1_gx7fl"]
+[ext_resource type="Texture2D" uid="uid://bb08cyi4baxnx" path="res://texture/mesh_texture/Road007_2K/Road007_2K-JPG_Roughness.jpg" id="2_wwd3j"]
+[ext_resource type="Texture2D" uid="uid://bbdrwmubklujr" path="res://texture/mesh_texture/Road007_2K/Road007_2K-JPG_NormalDX.jpg" id="3_apvie"]
+
+[resource]
+albedo_texture = ExtResource("1_gx7fl")
+normal_enabled = true
+normal_texture = ExtResource("3_apvie")
+clearcoat_enabled = true
+clearcoat = 0.0
+clearcoat_texture = ExtResource("2_wwd3j")
+uv1_scale = Vector3(0.05, 0.05, 0.05)

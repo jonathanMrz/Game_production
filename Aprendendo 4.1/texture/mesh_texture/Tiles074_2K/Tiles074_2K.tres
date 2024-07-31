@@ -1,0 +1,13 @@
+[gd_resource type="ORMMaterial3D" load_steps=4 format=3 uid="uid://cye8rpvv7q5k3"]
+
+[ext_resource type="Texture2D" uid="uid://beqfs3syuyiv8" path="res://texture/mesh_texture/Tiles074_2K/Tiles074_2K-JPG_Color.jpg" id="1_xtib8"]
+[ext_resource type="Texture2D" uid="uid://dlfvbqrcah7cm" path="res://texture/mesh_texture/Tiles074_2K/Tiles074_2K-JPG_Displacement.jpg" id="2_rwm8l"]
+[ext_resource type="Texture2D" uid="uid://ruflwbwtjlev" path="res://texture/mesh_texture/Tiles074_2K/Tiles074_2K-JPG_NormalDX.jpg" id="3_xk5bw"]
+
+[resource]
+albedo_texture = ExtResource("1_xtib8")
+normal_enabled = true
+normal_texture = ExtResource("3_xk5bw")
+clearcoat_enabled = true
+clearcoat = 0.0
+clearcoat_texture = ExtResource("2_rwm8l")

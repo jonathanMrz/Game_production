@@ -1,0 +1,16 @@
+[gd_resource type="ORMMaterial3D" load_steps=4 format=3 uid="uid://dasxv15voe3y2"]
+
+[ext_resource type="Texture2D" uid="uid://bmmk64srxlnge" path="res://texture/mesh_texture/Facade006_2K/Facade006_2K-JPG_Color.jpg" id="1_usmah"]
+[ext_resource type="Texture2D" uid="uid://bav266ujsiwyb" path="res://texture/mesh_texture/Facade006_2K/Facade006_2K-JPG_Metalness.jpg" id="2_i46rb"]
+[ext_resource type="Texture2D" uid="uid://d0w8dqrwupkkq" path="res://texture/mesh_texture/Facade006_2K/Facade006_2K-JPG_NormalDX.jpg" id="3_73y7i"]
+
+[resource]
+albedo_texture = ExtResource("1_usmah")
+normal_enabled = true
+normal_texture = ExtResource("3_73y7i")
+clearcoat_enabled = true
+clearcoat_texture = ExtResource("2_i46rb")
+heightmap_scale = 4.785
+refraction_scale = -1.0
+uv1_scale = Vector3(0.01, 0.01, 0.01)
+uv1_triplanar = true

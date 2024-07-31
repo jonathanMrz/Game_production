@@ -356,13 +356,3 @@ func _on_big_jump_strenght_timeout():
 	ms +=1.5
 
 #Player world reaction
-func _on_area_3d_body_entered(body):
-	velocity.y = 0
-	gravity = 0
-	print("Entrei")
-	pass # Replace with function body.
-
-func _on_area_3d_body_exited(body):
-	gravity = 9.8
-	velocity = direction * 50
-	pass # Replace with function body.
