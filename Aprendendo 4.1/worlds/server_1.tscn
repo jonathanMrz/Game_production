@@ -1,6 +1,9 @@
-[gd_scene load_steps=787 format=3 uid="uid://bi5p4uafrqw8p"]
+[gd_scene load_steps=789 format=3 uid="uid://bi5p4uafrqw8p"]
 
+[ext_resource type="Script" path="res://script/worlds_script/server_1.gd" id="1_4brfd"]
 [ext_resource type="PackedScene" uid="uid://ls1l2ut2f0cx" path="res://player/player.tscn" id="2_aawhd"]
+[ext_resource type="PackedScene" uid="uid://dq78m54qtkjsf" path="res://objects/hurtbox/floorless.tscn" id="2_xkc1k"]
+[ext_resource type="Shader" path="res://texture/shader/grind_floor.gdshader" id="3_abdks"]
 [ext_resource type="Script" path="res://addons/cyclops_level_builder/nodes/cyclops_block.gd" id="3_te7yh"]
 [ext_resource type="Script" path="res://addons/cyclops_level_builder/resources/data_vector_byte.gd" id="4_yx8bj"]
 [ext_resource type="Script" path="res://addons/cyclops_level_builder/resources/data_vector_int.gd" id="5_teve4"]
@@ -11,7 +14,6 @@
 [ext_resource type="Material" uid="uid://hfio5k0rda6w" path="res://texture/mesh_texture/Tiles032_2K/Tiles032_2K.tres" id="9_nt28l"]
 [ext_resource type="Shader" path="res://texture/shader/portalred.gdshader" id="10_spx4l"]
 [ext_resource type="Material" uid="uid://c3t05thscwwv4" path="res://texture/mesh_texture/Others/Blackcrey.tres" id="12_fa265"]
-[ext_resource type="Shader" path="res://texture/shader/grind_floor.gdshader" id="12_kgw2p"]
 [ext_resource type="Shader" path="res://texture/shader/portal.gdshader" id="13_sngpf"]
 [ext_resource type="Material" uid="uid://cye8rpvv7q5k3" path="res://texture/mesh_texture/Tiles074_2K/Tiles074_2K.tres" id="13_u70fk"]
 [ext_resource type="Material" uid="uid://dasxv15voe3y2" path="res://texture/mesh_texture/Facade006_2K/Facade006_2K.tres" id="14_4baw5"]
@@ -36,9 +38,12 @@ radiance_size = 0
 background_mode = 2
 sky = SubResource("Sky_gfmhl")
 
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_wfuo2"]
+data = PackedVector3Array(1, 0, 1, -1, 0, 1, 1, 0, -1, -1, 0, 1, -1, 0, -1, 1, 0, -1)
+
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_3xd11"]
 render_priority = 0
-shader = ExtResource("12_kgw2p")
+shader = ExtResource("3_abdks")
 shader_parameter/grid_size = 512.0
 shader_parameter/cell_size = 5.0
 shader_parameter/gutter_size = 0.04
@@ -56,11 +61,8 @@ shader_parameter/fresnel_color = Color(0.427451, 0.00392157, 0.658824, 1)
 shader_parameter/fresnel_intensity = 5.0
 shader_parameter/fresnel_amount = 15.0
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_e78jc"]
+[sub_resource type="PlaneMesh" id="PlaneMesh_08p3s"]
 material = SubResource("ShaderMaterial_3xd11")
-
-[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_8ux8v"]
-data = PackedVector3Array(1, 0, 1, -1, 0, 1, 1, 0, -1, -1, 0, 1, -1, 0, -1, 1, 0, -1)
 
 [sub_resource type="Resource" id="Resource_npxx6"]
 script = ExtResource("4_yx8bj")
@@ -7701,6 +7703,7 @@ face_vertex_data = {
 }
 
 [node name="server_1" type="Node3D"]
+script = ExtResource("1_4brfd")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.980271, 0.171177, -0.0988285, 0, 0.499998, 0.866027, 0.197658, -0.848941, 0.490133, 0, 0, 0)
@@ -7711,17 +7714,17 @@ shadow_enabled = true
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_12das")
 
-[node name="Floorless" type="MeshInstance3D" parent="."]
-transform = Transform3D(500, 0, 0, 0, 500, 0, 0, 0, 500, 0, -10, 0)
-mesh = SubResource("PlaneMesh_e78jc")
+[node name="Floorless" parent="." instance=ExtResource("2_xkc1k")]
 
-[node name="StaticBody3D" type="StaticBody3D" parent="Floorless"]
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="Floorless"]
+shape = SubResource("ConcavePolygonShape3D_wfuo2")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Floorless/StaticBody3D"]
-shape = SubResource("ConcavePolygonShape3D_8ux8v")
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Floorless"]
+mesh = SubResource("PlaneMesh_08p3s")
+skeleton = NodePath("../..")
 
 [node name="Player" parent="." instance=ExtResource("2_aawhd")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.72472, 0)
 
 [node name="TileMap" type="Node3D" parent="."]
 
@@ -8440,3 +8443,5 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1.152, -209.133, -1.55759, -79.9
 script = ExtResource("3_te7yh")
 mesh_vector_data = SubResource("Resource_81bvr")
 materials = Array[Material]([ExtResource("19_jdnna")])
+
+[connection signal="body_entered" from="Floorless" to="Player" method="_on_floorless_body_entered"]

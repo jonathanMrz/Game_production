@@ -19,6 +19,7 @@ config/icon="res://texture/icon.svg"
 
 music_controller="*res://sound/music_controller.tscn"
 CyclopsAutoload="*res://addons/cyclops_level_builder/cyclops_global_scene.tscn"
+Global="*res://script/global.gd"
 
 [editor_plugins]
 

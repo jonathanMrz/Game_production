@@ -28,12 +28,14 @@ var fordward = false
 var rewindvalue = {"position":[],"velocity":[],"rotation_x":[],"rotation_y":[]}
 #Objects
 var direction = Vector3.ZERO
-@onready var rewind_effect = $HUD/Rewind_effect
-@onready var fordward_effect = $HUD/Fordward_effect
+@onready var rewind_effect = $HUD/Effects/Rewind_effect
+@onready var fordward_effect = $HUD/Effects/Fordward_effect
 @onready var head = $Head
 @onready var camera = $Head/Camera3D
 @onready var default_body = $Default_colision
 @onready var head_check = $Head_check
+@onready var lifebar = $HUD/Life/Lifebar
+@onready var skeleton = $HUD/Life/Skeleton
 #Timers
 @onready var big_jump_moment = $Timers/Big_jump_moment
 @onready var big_jump_strenght = $Timers/Big_jump_strenght
@@ -87,6 +89,13 @@ func _input(event):
 
 #Process funcs
 func _process(delta):
+	if lifebar.value > lifebar.max_value*0.75:
+		skeleton.play("fulllife_default")
+	elif lifebar.value <= lifebar.max_value*0.75 and lifebar.value >= lifebar.max_value*0.45:
+		skeleton.play("midlife_default")
+	elif lifebar.value < lifebar.max_value*0.45 and lifebar.value >0 :
+		skeleton.play("lowlife_default")
+	
 	if fordward_bar.value == 0:
 		fordward = false
 	if regen_ability1:
@@ -322,7 +331,7 @@ func rewind_process(_delta: float):
 	if rewindvalue["position"].is_empty():
 		rewind = false
 		return
-	if rot_x != null or rot_y != null: 
+	if rot_x != null or rot_y != null:
 		head.rotate_y(rot_x)
 		camera.rotate_x(rot_y)
 		camera.rotation.x = clamp(camera.rotation.x, deg_to_rad(-45), deg_to_rad(45))
@@ -356,3 +365,7 @@ func _on_big_jump_strenght_timeout():
 	ms +=1.5
 
 #Player world reaction
+func _on_floorless_body_entered(body):
+	if velocity.y < -5:
+		lifebar.value -= lifebar.value
+	pass # Replace with function body.

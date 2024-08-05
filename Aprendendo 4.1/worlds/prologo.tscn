@@ -1,8 +1,7 @@
-[gd_scene load_steps=25 format=3 uid="uid://dedvpl02v5jn0"]
+[gd_scene load_steps=24 format=3 uid="uid://dedvpl02v5jn0"]
 
 [ext_resource type="Script" path="res://script/worlds_script/prologo.gd" id="1_ac1kp"]
 [ext_resource type="PackedScene" uid="uid://ls1l2ut2f0cx" path="res://player/player.tscn" id="2_1q0m0"]
-[ext_resource type="Texture2D" uid="uid://bwgpjwqsgf4r1" path="res://texture/icon/Fordward_bar_less.png" id="3_3f45m"]
 [ext_resource type="Shader" path="res://texture/shader/portal.gdshader" id="4_gvfxm"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_oglog"]
@@ -21,7 +20,6 @@ tonemap_mode = 2
 glow_enabled = true
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_odx51"]
-albedo_texture = ExtResource("3_3f45m")
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_4ggth"]
 
@@ -29,7 +27,6 @@ albedo_texture = ExtResource("3_3f45m")
 data = PackedVector3Array(1, 0, 1, -1, 0, 1, 1, 0, -1, -1, 0, 1, -1, 0, -1, 1, 0, -1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_08o76"]
-albedo_texture = ExtResource("3_3f45m")
 
 [sub_resource type="PrismMesh" id="PrismMesh_ds5j1"]
 
