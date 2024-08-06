@@ -28,8 +28,8 @@ var fordward = false
 var rewindvalue = {"position":[],"velocity":[],"rotation_x":[],"rotation_y":[]}
 #Objects
 var direction = Vector3.ZERO
-@onready var rewind_effect = $HUD/Effects/Rewind_effect
-@onready var fordward_effect = $HUD/Effects/Fordward_effect
+@onready var rewind_effect = $HUD/Crossair/Effects/Rewind_effect
+@onready var fordward_effect = $HUD/Crossair/Effects/Fordward_effect
 @onready var head = $Head
 @onready var camera = $Head/Camera3D
 @onready var default_body = $Default_colision
@@ -164,7 +164,7 @@ func _process(delta):
 		jump_strength = 5
 
 func _physics_process(delta):
-	$HUD/Label.text = "%s" % (velocity.y)
+	$HUD/Label.text = "%s" % (direction)
 	preserved_speed.x = velocity.x
 	preserved_speed.z = velocity.z
 	if velocity.y < 0:
@@ -279,7 +279,7 @@ func _physics_process(delta):
 	direction = (head.transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 	if is_on_floor():
 		var stap = 0
-		if !is_on_wall() and !crouch and (direction.z !=0 or direction.x !=0) and $Timers/Stap_timer.time_left <= 0:
+		if !crouch and (direction.z !=0 or direction.x !=0) and $Timers/Stap_timer.time_left <= 0:
 			$SFX/walking_sound.play()
 			$Timers/Stap_timer.start()
 			stap+=1
@@ -308,7 +308,7 @@ func _physics_process(delta):
 		velocity.z = lerp(velocity.z, direction.z * speed, delta * 4)
 	
 	# head player
-	if !is_on_wall() and !crouch:
+	if !crouch:
 		t_player += delta * velocity.length() * float(is_on_floor()) 
 		camera.transform.origin = _headplayer(t_player)
 	
@@ -356,7 +356,7 @@ func fordward_process(delta):
 
 func _headplayer(time) -> Vector3:
 	var pos = Vector3.ZERO
-	pos.y = sin(time * player_freq) * player_amp
+	pos.y = (sin(time * player_freq)*0.7) * player_amp
 	pos.x = sin(time * player_freq/2) * player_amp/2
 	return pos#camera values
 	move_and_slide()

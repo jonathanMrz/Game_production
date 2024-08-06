@@ -1,4 +1,4 @@
-[gd_scene load_steps=91 format=3 uid="uid://ls1l2ut2f0cx"]
+[gd_scene load_steps=93 format=3 uid="uid://ls1l2ut2f0cx"]
 
 [ext_resource type="Script" path="res://player/script_player/player.gd" id="1_rx7fi"]
 [ext_resource type="Script" path="res://player/hud.gd" id="2_4h548"]
@@ -35,10 +35,12 @@
 [ext_resource type="Texture2D" uid="uid://bhsjsawilrxqq" path="res://texture/animation/lifebar_animation/lifebar_value2.png" id="17_v3jjh"]
 [ext_resource type="Texture2D" uid="uid://lkrnhrt2mc1" path="res://texture/animation/skull_animation/lifebar_full/skull01l.png" id="18_0rn1y"]
 [ext_resource type="AudioStream" uid="uid://335hv8v3dkjh" path="res://sound/sfx/wall_slid.mp3" id="19_byri2"]
+[ext_resource type="Texture2D" uid="uid://c34gfqsebm1pf" path="res://texture/animation/lifebar_animation/lifebar_under5.png" id="19_gcwaa"]
 [ext_resource type="Texture2D" uid="uid://rme6jdq4oit1" path="res://texture/animation/skull_animation/lifebar_full/skull01r.png" id="19_is7kk"]
 [ext_resource type="Texture2D" uid="uid://bgtdgt6nenv1b" path="res://texture/animation/skull_animation/lifebar_full/skull03r.png" id="20_bn5da"]
 [ext_resource type="Texture2D" uid="uid://dkq6hswgrw3wt" path="res://texture/animation/skull_animation/lifebar_full/skull02r.png" id="21_duf88"]
 [ext_resource type="Texture2D" uid="uid://dvofstw8vdgtj" path="res://texture/animation/skull_animation/lifebar_full/skull03l.png" id="22_h8wwa"]
+[ext_resource type="Texture2D" uid="uid://kewwtlyx67c8" path="res://texture/animation/lifebar_animation/lifebar_value5.png" id="23_jrxpi"]
 [ext_resource type="Texture2D" uid="uid://cfrrc50ym15df" path="res://texture/animation/skull_animation/lifebar_full/skull02l.png" id="23_pl4to"]
 [ext_resource type="Texture2D" uid="uid://c3o340ubc4elj" path="res://texture/animation/skull_animation/lifebar_full/skull04.png" id="24_bewwb"]
 [ext_resource type="Texture2D" uid="uid://ds60kyqq2gmyh" path="res://texture/animation/skull_animation/lifebar_full/skull05l.png" id="25_buug3"]
@@ -125,7 +127,7 @@ frame_2/texture = ExtResource("15_g1v2v")
 frame_2/duration = 1.0
 
 [sub_resource type="AnimatedTexture" id="AnimatedTexture_82bqp"]
-frames = 4
+frames = 5
 frame_0/texture = ExtResource("12_gwwm2")
 frame_0/duration = 7.0
 frame_1/texture = ExtResource("13_i21e1")
@@ -134,9 +136,11 @@ frame_2/texture = ExtResource("14_papdr")
 frame_2/duration = 0.2
 frame_3/texture = ExtResource("13_i21e1")
 frame_3/duration = 0.1
+frame_4/texture = ExtResource("19_gcwaa")
+frame_4/duration = 1.0
 
 [sub_resource type="AnimatedTexture" id="AnimatedTexture_12ny1"]
-frames = 4
+frames = 5
 frame_0/texture = ExtResource("15_qsgin")
 frame_0/duration = 7.0
 frame_1/texture = ExtResource("16_4wxqf")
@@ -145,6 +149,8 @@ frame_2/texture = ExtResource("17_v3jjh")
 frame_2/duration = 0.2
 frame_3/texture = ExtResource("16_4wxqf")
 frame_3/duration = 0.1
+frame_4/texture = ExtResource("23_jrxpi")
+frame_4/duration = 1.0
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_o4rgc"]
 animations = [{
@@ -477,6 +483,40 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
+[node name="Effects" type="Control" parent="HUD/Crossair"]
+layout_mode = 2
+
+[node name="Rewind_effect" type="TextureRect" parent="HUD/Crossair/Effects"]
+visible = false
+texture_repeat = 2
+material = SubResource("ShaderMaterial_ngq0j")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -576.0
+offset_top = -324.0
+offset_right = 576.0
+offset_bottom = 324.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("CameraTexture_nbi2e")
+
+[node name="Fordward_effect" type="TextureRect" parent="HUD/Crossair/Effects"]
+visible = false
+material = SubResource("ShaderMaterial_htrso")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -576.0
+offset_top = -324.0
+offset_right = 576.0
+offset_bottom = 324.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("CameraTexture_5vwnc")
+
 [node name="Default_crossair_icon" type="Sprite2D" parent="HUD/Crossair"]
 position = Vector2(576, 324)
 scale = Vector2(0.05, 0.05)
@@ -494,43 +534,6 @@ position = Vector2(576, 324)
 scale = Vector2(0.1, 0.1)
 texture = ExtResource("3_scvu6")
 
-[node name="Effects" type="Control" parent="HUD"]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_right = -1089.0
-offset_bottom = -595.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="Rewind_effect" type="TextureRect" parent="HUD/Effects"]
-visible = false
-texture_repeat = 2
-material = SubResource("ShaderMaterial_ngq0j")
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_right = 1078.0
-offset_bottom = 597.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = SubResource("CameraTexture_nbi2e")
-
-[node name="Fordward_effect" type="TextureRect" parent="HUD/Effects"]
-visible = false
-material = SubResource("ShaderMaterial_htrso")
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_right = 1095.0
-offset_bottom = 598.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = SubResource("CameraTexture_5vwnc")
-
 [node name="Control" type="Control" parent="HUD"]
 layout_mode = 3
 anchors_preset = 0
@@ -539,10 +542,10 @@ offset_bottom = 40.0
 
 [node name="Rewind_bar" type="TextureProgressBar" parent="HUD/Control"]
 layout_mode = 0
-offset_left = 128.0
-offset_top = 568.0
-offset_right = 243.0
-offset_bottom = 628.0
+offset_left = 59.0
+offset_top = 557.0
+offset_right = 174.0
+offset_bottom = 617.0
 max_value = 500.0
 value = 250.0
 nine_patch_stretch = true
@@ -553,10 +556,10 @@ texture_progress = SubResource("AnimatedTexture_5m0e2")
 light_mask = 512
 visibility_layer = 512
 layout_mode = 0
-offset_left = 912.0
-offset_top = 568.0
-offset_right = 1027.0
-offset_bottom = 628.0
+offset_left = 998.0
+offset_top = 559.0
+offset_right = 1113.0
+offset_bottom = 619.0
 max_value = 500.0
 value = 100.0
 nine_patch_stretch = true
@@ -564,10 +567,10 @@ texture_under = ExtResource("12_ogxli")
 texture_progress = SubResource("AnimatedTexture_3n5ng")
 
 [node name="Label" type="Label" parent="HUD"]
-offset_left = 336.0
-offset_top = 544.0
-offset_right = 366.0
-offset_bottom = 567.0
+offset_left = 648.0
+offset_top = 535.0
+offset_right = 662.0
+offset_bottom = 558.0
 scale = Vector2(1.73498, 1.06578)
 
 [node name="Pause_menu" type="MarginContainer" parent="HUD"]
@@ -603,10 +606,10 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -187.0
-offset_top = -93.0
-offset_right = 563.0
-offset_bottom = 107.0
+offset_left = -203.0
+offset_top = -81.0
+offset_right = 547.0
+offset_bottom = 119.0
 grow_horizontal = 2
 grow_vertical = 0
 scale = Vector2(0.5, 0.5)
@@ -620,24 +623,24 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -557.0
-offset_top = -204.0
-offset_right = 557.0
+offset_left = -571.0
+offset_top = -228.0
+offset_right = 655.0
 offset_bottom = -40.0
 grow_horizontal = 2
 grow_vertical = 0
 max_value = 250.0
-value = 100.0
+value = 250.0
 fill_mode = 6
 nine_patch_stretch = true
 texture_under = SubResource("AnimatedTexture_82bqp")
 texture_progress = SubResource("AnimatedTexture_12ny1")
 
 [node name="Skeleton" type="AnimatedSprite2D" parent="HUD/Life"]
-position = Vector2(376, 78)
-scale = Vector2(0.247279, 0.261927)
+position = Vector2(416, 64)
+scale = Vector2(0.268333, 0.284228)
 sprite_frames = SubResource("SpriteFrames_o4rgc")
-animation = &"lowlife_default"
+animation = &"fulllife_default"
 speed_scale = 0.5
 
 [node name="Timers" type="Node" parent="."]
