@@ -1,5 +1,7 @@
 class_name Player extends CharacterBody3D
 #Int/Float Values
+var animation_step = false
+var damege_count = 0
 var disable_slide = false
 var volume = 1
 var floor_sliding = false
@@ -55,6 +57,8 @@ var wait2 = true
 
 #Event funcs
 func _ready():
+	damege_count = lifebar.value
+	Global.player = self
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 
 func _unhandled_input(event):
@@ -89,12 +93,30 @@ func _input(event):
 
 #Process funcs
 func _process(delta):
+		
 	if lifebar.value > lifebar.max_value*0.75:
-		skeleton.play("fulllife_default")
+		if damege_count > lifebar.value:
+			skeleton.play("fulllife_damege")
+			await get_tree().create_timer(0.5).timeout
+			damege_count = lifebar.value
+		else:
+			skeleton.play("fulllife_default")
 	elif lifebar.value <= lifebar.max_value*0.75 and lifebar.value >= lifebar.max_value*0.45:
-		skeleton.play("midlife_default")
-	elif lifebar.value < lifebar.max_value*0.45 and lifebar.value >0 :
-		skeleton.play("lowlife_default")
+		if lifebar.value < damege_count:
+			skeleton.stop()
+			skeleton.play("midlife_damege")
+			damege_count = lifebar.value
+		else:
+			skeleton.play("midlife_default")
+	elif lifebar.value < lifebar.max_value*0.45 and lifebar.value >0:
+		if lifebar.value < damege_count:
+			skeleton.stop()
+			skeleton.play("lowlife_damege")
+			damege_count = lifebar.value
+			animation_step = true
+		elif !animation_step:
+			skeleton.play("lowlife_default")
+	
 	
 	if fordward_bar.value == 0:
 		fordward = false
@@ -164,7 +186,9 @@ func _process(delta):
 		jump_strength = 5
 
 func _physics_process(delta):
-	$HUD/Label.text = "%s" % (direction)
+	if lifebar.value <=0:
+		die()
+	$HUD/Label.text = "%s" % (skeleton.animation)
 	preserved_speed.x = velocity.x
 	preserved_speed.z = velocity.z
 	if velocity.y < 0:
@@ -367,5 +391,9 @@ func _on_big_jump_strenght_timeout():
 #Player world reaction
 func _on_floorless_body_entered(body):
 	if velocity.y < -5:
-		lifebar.value -= lifebar.value
+		lifebar.value -= 10
+		Global.respawn_player()
 	pass # Replace with function body.
+	
+func die():
+	get_tree().quit()

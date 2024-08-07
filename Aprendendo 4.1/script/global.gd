@@ -1,7 +1,7 @@
 extends Node
 
-var player = null
-var current_checkpoint = null
+var player :Player
+var current_checkpoint :Checkpoint
 
 func respawn_player():
 	if current_checkpoint != null:

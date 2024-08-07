@@ -208,7 +208,7 @@ animations = [{
 "duration": 5.0,
 "texture": ExtResource("24_bewwb")
 }],
-"loop": true,
+"loop": false,
 "name": &"fulllife_default",
 "speed": 5.0
 }, {
@@ -225,7 +225,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("26_8vs4o")
 }],
-"loop": true,
+"loop": false,
 "name": &"fulllife_interaction",
 "speed": 5.0
 }, {
@@ -259,7 +259,7 @@ animations = [{
 "duration": 0.5,
 "texture": ExtResource("32_dboe2")
 }],
-"loop": true,
+"loop": false,
 "name": &"lowlife_damege",
 "speed": 5.0
 }, {
@@ -300,7 +300,7 @@ animations = [{
 "duration": 5.0,
 "texture": ExtResource("39_482tp")
 }],
-"loop": true,
+"loop": false,
 "name": &"lowlife_default",
 "speed": 5.0
 }, {
@@ -317,7 +317,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("41_ct3gt")
 }],
-"loop": true,
+"loop": false,
 "name": &"lowlife_interaction",
 "speed": 5.0
 }, {
@@ -334,7 +334,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("43_l1quc")
 }],
-"loop": true,
+"loop": false,
 "name": &"lowlife_item",
 "speed": 5.0
 }, {
@@ -351,7 +351,7 @@ animations = [{
 "duration": 0.5,
 "texture": ExtResource("47_wc8y1")
 }],
-"loop": true,
+"loop": false,
 "name": &"midlife_damege",
 "speed": 5.0
 }, {
@@ -392,7 +392,7 @@ animations = [{
 "duration": 5.0,
 "texture": ExtResource("54_41g1h")
 }],
-"loop": true,
+"loop": false,
 "name": &"midlife_default",
 "speed": 5.0
 }, {
@@ -409,7 +409,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("56_7yhve")
 }],
-"loop": true,
+"loop": false,
 "name": &"midlife_interaction",
 "speed": 5.0
 }, {
@@ -426,7 +426,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("58_v80oe")
 }],
-"loop": true,
+"loop": false,
 "name": &"midlife_item",
 "speed": 5.0
 }]
@@ -567,10 +567,10 @@ texture_under = ExtResource("12_ogxli")
 texture_progress = SubResource("AnimatedTexture_3n5ng")
 
 [node name="Label" type="Label" parent="HUD"]
-offset_left = 648.0
-offset_top = 535.0
-offset_right = 662.0
-offset_bottom = 558.0
+offset_left = 399.0
+offset_top = 492.0
+offset_right = 423.0
+offset_bottom = 515.0
 scale = Vector2(1.73498, 1.06578)
 
 [node name="Pause_menu" type="MarginContainer" parent="HUD"]
@@ -640,7 +640,9 @@ texture_progress = SubResource("AnimatedTexture_12ny1")
 position = Vector2(416, 64)
 scale = Vector2(0.268333, 0.284228)
 sprite_frames = SubResource("SpriteFrames_o4rgc")
-animation = &"fulllife_default"
+animation = &"fulllife_damege"
+frame = 3
+frame_progress = 1.0
 speed_scale = 0.5
 
 [node name="Timers" type="Node" parent="."]
