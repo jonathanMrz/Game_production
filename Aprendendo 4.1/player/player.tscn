@@ -166,6 +166,9 @@ animations = [{
 }, {
 "duration": 0.5,
 "texture": ExtResource("17_j1ia7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("18_0rn1y")
 }],
 "loop": false,
 "name": &"fulllife_damege",
@@ -258,6 +261,9 @@ animations = [{
 }, {
 "duration": 0.5,
 "texture": ExtResource("32_dboe2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("33_cy7fg")
 }],
 "loop": false,
 "name": &"lowlife_damege",
@@ -350,6 +356,9 @@ animations = [{
 }, {
 "duration": 0.5,
 "texture": ExtResource("47_wc8y1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("48_4nucf")
 }],
 "loop": false,
 "name": &"midlife_damege",
@@ -640,9 +649,7 @@ texture_progress = SubResource("AnimatedTexture_12ny1")
 position = Vector2(416, 64)
 scale = Vector2(0.268333, 0.284228)
 sprite_frames = SubResource("SpriteFrames_o4rgc")
-animation = &"fulllife_damege"
-frame = 3
-frame_progress = 1.0
+animation = &"midlife_damege"
 speed_scale = 0.5
 
 [node name="Timers" type="Node" parent="."]

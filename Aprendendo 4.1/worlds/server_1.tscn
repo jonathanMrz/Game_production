@@ -1,9 +1,8 @@
-[gd_scene load_steps=790 format=3 uid="uid://bi5p4uafrqw8p"]
+[gd_scene load_steps=785 format=3 uid="uid://bi5p4uafrqw8p"]
 
 [ext_resource type="Script" path="res://script/worlds_script/server_1.gd" id="1_4brfd"]
 [ext_resource type="PackedScene" uid="uid://ls1l2ut2f0cx" path="res://player/player.tscn" id="2_aawhd"]
 [ext_resource type="PackedScene" uid="uid://dq78m54qtkjsf" path="res://objects/hurtbox/floorless.tscn" id="2_xkc1k"]
-[ext_resource type="Shader" path="res://texture/shader/grind_floor.gdshader" id="3_abdks"]
 [ext_resource type="Script" path="res://addons/cyclops_level_builder/nodes/cyclops_block.gd" id="3_te7yh"]
 [ext_resource type="Script" path="res://addons/cyclops_level_builder/resources/data_vector_byte.gd" id="4_yx8bj"]
 [ext_resource type="Script" path="res://addons/cyclops_level_builder/resources/data_vector_int.gd" id="5_teve4"]
@@ -21,7 +20,6 @@
 [ext_resource type="Material" uid="uid://r0epvld8n3d4" path="res://texture/mesh_texture/Road007_2K/Road007_2Ktres.tres" id="16_pdomc"]
 [ext_resource type="Material" uid="uid://dx6mkvkvbhr31" path="res://texture/mesh_texture/Facade018B_2K/Facade018B_2K.tres" id="16_tlr0s"]
 [ext_resource type="Material" uid="uid://b48bp527smhuh" path="res://texture/mesh_texture/Facade018C_2K/Facade018C_2K.tres" id="17_nvnjj"]
-[ext_resource type="PackedScene" uid="uid://by0ldxhgunblo" path="res://objects/checkpoint.tscn" id="19_itn56"]
 [ext_resource type="Material" uid="uid://ttymyxdker5c" path="res://texture/mesh_texture/PavingStones132_2K/PavingStones132_2K.tres" id="19_jdnna"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_vw474"]
@@ -38,32 +36,6 @@ radiance_size = 0
 [sub_resource type="Environment" id="Environment_12das"]
 background_mode = 2
 sky = SubResource("Sky_gfmhl")
-
-[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_wfuo2"]
-data = PackedVector3Array(1, 0, 1, -1, 0, 1, 1, 0, -1, -1, 0, 1, -1, 0, -1, 1, 0, -1)
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_nlytk"]
-render_priority = 0
-shader = ExtResource("3_abdks")
-shader_parameter/grid_size = 512.0
-shader_parameter/cell_size = 5.0
-shader_parameter/gutter_size = 0.04
-shader_parameter/cell_color = Color(0.466667, 0, 0.466667, 1)
-shader_parameter/gutter_color = Color(0.988235, 0.054902, 1, 1)
-shader_parameter/cell_roundedness = 0.206
-shader_parameter/cell_manipulator_radius = 0.0
-shader_parameter/cell_manipulator_uv_pos = Vector2(0.5, 0.5)
-shader_parameter/manipulated_cell_size = 0.5
-shader_parameter/manipulator_gutter_color = Color(1, 1, 1, 1)
-shader_parameter/cell_manipulation_anim_speed = 1.0
-shader_parameter/gutter_noise_color = Color(1, 1, 1, 1)
-shader_parameter/gutter_noise_speed = 0.1
-shader_parameter/fresnel_color = Color(0.427451, 0.00392157, 0.658824, 1)
-shader_parameter/fresnel_intensity = 5.0
-shader_parameter/fresnel_amount = 15.0
-
-[sub_resource type="PlaneMesh" id="PlaneMesh_08p3s"]
-material = SubResource("ShaderMaterial_nlytk")
 
 [sub_resource type="Resource" id="Resource_npxx6"]
 script = ExtResource("4_yx8bj")
@@ -7717,13 +7689,6 @@ environment = SubResource("Environment_12das")
 
 [node name="Floorless" parent="." instance=ExtResource("2_xkc1k")]
 
-[node name="CollisionShape3D2" type="CollisionShape3D" parent="Floorless"]
-shape = SubResource("ConcavePolygonShape3D_wfuo2")
-
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="Floorless"]
-mesh = SubResource("PlaneMesh_08p3s")
-skeleton = NodePath("../..")
-
 [node name="Player" parent="." instance=ExtResource("2_aawhd")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.72472, 0)
 
@@ -8081,12 +8046,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1.152, -209.133, -1.55759, -79.9
 script = ExtResource("3_te7yh")
 mesh_vector_data = SubResource("Resource_81bvr")
 materials = Array[Material]([ExtResource("19_jdnna")])
-
-[node name="Checkpoint2" parent="TileMap" instance=ExtResource("19_itn56")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.25896, -25.124)
-
-[node name="Checkpoint" parent="TileMap" instance=ExtResource("19_itn56")]
-transform = Transform3D(2.89128, 0, 0, 0, 3.29446, 0, 0, 0, 1.36256, 0, 3.00575, -9.86065)
 
 [node name="Meshbackground" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.8877, 0)

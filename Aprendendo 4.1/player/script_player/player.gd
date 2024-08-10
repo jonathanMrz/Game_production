@@ -1,5 +1,6 @@
 class_name Player extends CharacterBody3D
 #Int/Float Values
+var respawning = false
 var animation_step = false
 var damege_count = 0
 var disable_slide = false
@@ -58,7 +59,6 @@ var wait2 = true
 #Event funcs
 func _ready():
 	damege_count = lifebar.value
-	Global.player = self
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 
 func _unhandled_input(event):
@@ -67,7 +67,7 @@ func _unhandled_input(event):
 		camera.rotate_x(-event.relative.y * sensitive)
 		camera.rotation.x = clamp(camera.rotation.x, deg_to_rad(-45), deg_to_rad(45))
 		default_body.rotate_y(-event.relative.x * sensitive)
-		rewindvalue["rotation_y"].append(event.relative.y * sensitive)
+		rewindvalue["rotation_y"].append(event.relative.y/2 * sensitive)
 		rewindvalue["rotation_x"].append(event.relative.x * sensitive)
 
 func _input(event):
@@ -79,7 +79,7 @@ func _input(event):
 			abilit_select -=1
 	
 	#abilitys event
-	if Input.is_action_pressed("M2"):
+	if Input.is_action_pressed("M2") and !respawning:
 		if abilit_select == 1 and rewindvalue["rotation_x"] != null and rewind_bar.value != 0:
 			rewind = true
 			fordward = false
@@ -87,34 +87,34 @@ func _input(event):
 			rewind = false
 			fordward = true
 	else:
-		rewind = false;
+		if !respawning:
+			rewind = false;
 		fordward = false
 		music_controller.music_pitch(1.00)
 
 #Process funcs
 func _process(delta):
-		
+	$HUD/Label.text = "%s" % (lifebar.value)
 	if lifebar.value > lifebar.max_value*0.75:
 		if damege_count > lifebar.value:
 			skeleton.play("fulllife_damege")
-			await get_tree().create_timer(0.5).timeout
-			damege_count = lifebar.value
+			if skeleton.frame==4:
+				damege_count = lifebar.value
 		else:
 			skeleton.play("fulllife_default")
 	elif lifebar.value <= lifebar.max_value*0.75 and lifebar.value >= lifebar.max_value*0.45:
-		if lifebar.value < damege_count:
-			skeleton.stop()
+		if damege_count > lifebar.value:
 			skeleton.play("midlife_damege")
-			damege_count = lifebar.value
+			if skeleton.frame==4:
+				damege_count = lifebar.value
 		else:
 			skeleton.play("midlife_default")
 	elif lifebar.value < lifebar.max_value*0.45 and lifebar.value >0:
-		if lifebar.value < damege_count:
-			skeleton.stop()
+		if damege_count > lifebar.value:
 			skeleton.play("lowlife_damege")
-			damege_count = lifebar.value
-			animation_step = true
-		elif !animation_step:
+			if skeleton.frame==4:
+				damege_count = lifebar.value
+		else:
 			skeleton.play("lowlife_default")
 	
 	
@@ -126,7 +126,7 @@ func _process(delta):
 			regen_ability1 = false
 			$SFX/alert2.set_pitch_scale(1)
 			$SFX/alert2.play()
-	if rewind_bar.value == 0 :
+	if rewind_bar.value == 0 and !respawning:
 		rewind = false
 	if regen_ability2:
 		rewind_bar.value += 0.5
@@ -188,7 +188,6 @@ func _process(delta):
 func _physics_process(delta):
 	if lifebar.value <=0:
 		die()
-	$HUD/Label.text = "%s" % (skeleton.animation)
 	preserved_speed.x = velocity.x
 	preserved_speed.z = velocity.z
 	if velocity.y < 0:
@@ -253,7 +252,7 @@ func _physics_process(delta):
 		big_jump_strenght.start()
 		ms = 0 
 		big_jump = true
-		velocity.y -= 40
+		velocity.y = -40
 	elif big_jump and is_on_floor():
 		camera.fov = 97.5
 		big_jump_moment.start()
@@ -262,7 +261,7 @@ func _physics_process(delta):
 		camera.transform.origin = _headplayer(t_player)
 	
 	#jump and big_jump
-	if Input.is_action_just_pressed("Space") and is_on_floor() and !head_check.is_colliding(): 
+	if Input.is_action_just_pressed("Space") and is_on_floor() and !head_check.is_colliding() and !rewind: 
 		if big_jump_moment.time_left> 0:
 			velocity.y = clamp(jump_strength + ms, jump_strength+1, 20)
 			$SFX/jump_sound.set_pitch_scale(1.8)
@@ -273,7 +272,7 @@ func _physics_process(delta):
 		disable_slide = true
 	
 	#dash
-	if Input.is_action_just_pressed("Shift") and dash_count > 0 and not is_on_floor() and not is_on_wall() and (direction.x!=0 or direction.z!=0):
+	if Input.is_action_just_pressed("Shift") and dash_count > 0 and not is_on_floor() and not is_on_wall() and (direction.x!=0 or direction.z!=0) and !rewind:
 		if fordward:
 			fordward_bar.value -= 50
 		$SFX/dash_sound.play()
@@ -301,7 +300,7 @@ func _physics_process(delta):
 	# basic moviment and direction and crouch operation
 	var input_dir = Input.get_vector("A", "D", "W", "S")
 	direction = (head.transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
-	if is_on_floor():
+	if is_on_floor() and !rewind:
 		var stap = 0
 		if !crouch and (direction.z !=0 or direction.x !=0) and $Timers/Stap_timer.time_left <= 0:
 			$SFX/walking_sound.play()
@@ -345,8 +344,13 @@ func _physics_process(delta):
 
 #Other funcs
 func rewind_process(_delta: float):
-	rewind_bar.value -= 5
+	if !respawning:
+		rewind_bar.value -= 5
+	if respawning and (is_on_floor() or sliding and wall_jump >0):
+		respawning = false
+		rewind = false
 	regen_ability2 = false
+	big_jump = false
 	var pos = rewindvalue["position"].pop_back()
 	var vel = rewindvalue["velocity"].pop_back()
 	var rot_x = rewindvalue["rotation_x"].pop_back()
@@ -360,7 +364,7 @@ func rewind_process(_delta: float):
 		camera.rotate_x(rot_y)
 		camera.rotation.x = clamp(camera.rotation.x, deg_to_rad(-45), deg_to_rad(45))
 	global_position = pos
-	velocity = vel
+	velocity = vel/2
 	rewind_effect.call_deferred("set_visible",true)
 	$HUD/Crossair/Rewind_crossair_icon.call_deferred("set_visible",true)
 	velocity.y = 0
@@ -390,10 +394,12 @@ func _on_big_jump_strenght_timeout():
 
 #Player world reaction
 func _on_floorless_body_entered(body):
-	if velocity.y < -5:
+	if body is Player and !respawning:
+		respawning = true
+		rewind = true
 		lifebar.value -= 10
-		Global.respawn_player()
 	pass # Replace with function body.
 	
 func die():
 	get_tree().quit()
+

@@ -1,0 +1,23 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://c8ntvgqorcffv"]
+
+[ext_resource type="Shader" path="res://texture/shader/grind_floor.gdshader" id="1_8k21d"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_8k21d")
+shader_parameter/grid_size = 700.0
+shader_parameter/cell_size = 5.0
+shader_parameter/gutter_size = 0.04
+shader_parameter/cell_color = Color(0.466667, 0, 0.466667, 1)
+shader_parameter/gutter_color = Color(0.988235, 0.054902, 1, 1)
+shader_parameter/cell_roundedness = 0.206
+shader_parameter/cell_manipulator_radius = 0.0
+shader_parameter/cell_manipulator_uv_pos = Vector2(0.5, 0.5)
+shader_parameter/manipulated_cell_size = 0.5
+shader_parameter/manipulator_gutter_color = Color(1, 1, 1, 1)
+shader_parameter/cell_manipulation_anim_speed = 1.0
+shader_parameter/gutter_noise_color = Color(1, 1, 1, 1)
+shader_parameter/gutter_noise_speed = 0.1
+shader_parameter/fresnel_color = Color(0.427451, 0.00392157, 0.658824, 1)
+shader_parameter/fresnel_intensity = 5.0
+shader_parameter/fresnel_amount = 15.0
