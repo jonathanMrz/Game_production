@@ -58,6 +58,7 @@ var wait2 = true
 
 #Event funcs
 func _ready():
+	global.player = self
 	damege_count = lifebar.value
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 
@@ -395,11 +396,12 @@ func _on_big_jump_strenght_timeout():
 #Player world reaction
 func _on_floorless_body_entered(body):
 	if body is Player and !respawning:
+		fordward = false
 		respawning = true
 		rewind = true
 		lifebar.value -= 10
 	pass # Replace with function body.
-	
+
 func die():
 	get_tree().quit()
 

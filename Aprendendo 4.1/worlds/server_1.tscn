@@ -1,4 +1,4 @@
-[gd_scene load_steps=785 format=3 uid="uid://bi5p4uafrqw8p"]
+[gd_scene load_steps=787 format=3 uid="uid://bi5p4uafrqw8p"]
 
 [ext_resource type="Script" path="res://script/worlds_script/server_1.gd" id="1_4brfd"]
 [ext_resource type="PackedScene" uid="uid://ls1l2ut2f0cx" path="res://player/player.tscn" id="2_aawhd"]
@@ -20,7 +20,9 @@
 [ext_resource type="Material" uid="uid://r0epvld8n3d4" path="res://texture/mesh_texture/Road007_2K/Road007_2Ktres.tres" id="16_pdomc"]
 [ext_resource type="Material" uid="uid://dx6mkvkvbhr31" path="res://texture/mesh_texture/Facade018B_2K/Facade018B_2K.tres" id="16_tlr0s"]
 [ext_resource type="Material" uid="uid://b48bp527smhuh" path="res://texture/mesh_texture/Facade018C_2K/Facade018C_2K.tres" id="17_nvnjj"]
+[ext_resource type="PackedScene" uid="uid://ygwuqctemctw" path="res://objects/doors/door_1.tscn" id="18_ehp8t"]
 [ext_resource type="Material" uid="uid://ttymyxdker5c" path="res://texture/mesh_texture/PavingStones132_2K/PavingStones132_2K.tres" id="19_jdnna"]
+[ext_resource type="PackedScene" uid="uid://cpuum3x6ihril" path="res://objects/doors/door_2.tscn" id="19_ma7y6"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_vw474"]
 sky_top_color = Color(0.141176, 0, 0.192157, 1)
@@ -7805,7 +7807,7 @@ transform = Transform3D(0.947896, 0, -0.195835, 0, 0.90703, 0, -0.318579, 0, -0.
 script = ExtResource("8_v46hc")
 
 [node name="Block_2" type="Node3D" parent="TileMap/Read"]
-transform = Transform3D(1.09413, 0, 3.72529e-09, 0, 1.3926, 0, 0, 0, 0.293065, -1.10932, 2.20348, -1.71293)
+transform = Transform3D(1.19351, 0, 4.84288e-08, 0, 1.62654, 0, 1.78814e-07, 0, 0.284119, -1.27003, 2.20348, -1.7165)
 script = ExtResource("3_te7yh")
 mesh_vector_data = SubResource("Resource_rseot")
 materials = Array[Material]([ExtResource("12_fa265")])
@@ -7817,14 +7819,15 @@ mesh_vector_data = SubResource("Resource_25k06")
 materials = Array[Material]([ExtResource("12_fa265")])
 
 [node name="Label3D" type="Label3D" parent="TileMap/Read"]
-transform = Transform3D(0.867325, 0, 2.98023e-08, 0, 0.677803, 0, 8.9407e-08, 0, 1, -0.0329068, 2.87536, -1.80739)
+transform = Transform3D(0.867325, 0, 5.96046e-08, 0, 0.677803, 0, 8.9407e-08, 0, 1, -0.0868134, 3.03746, -1.77792)
 pixel_size = 0.007
 text = "	BASIC CONTROLS
 \"Space\" to Jump
 \"W\"  Frontway move
 \"S\" Backway move
 \"D\" Right move
-\"A\" Left move"
+\"A\" Left move
+\"Shift\" on floor to run"
 
 [node name="Plataform" type="Node3D" parent="TileMap"]
 script = ExtResource("8_v46hc")
@@ -7852,7 +7855,7 @@ mesh_vector_data = SubResource("Resource_wg2ni")
 materials = Array[Material]([ExtResource("12_fa265")])
 
 [node name="Label3D" type="Label3D" parent="TileMap/Read2"]
-transform = Transform3D(0.867049, 0, -0.0252693, 0, 0.677805, 0, 0.0219172, 0, 0.999683, -0.492681, 2.87537, -1.0405)
+transform = Transform3D(0.838202, 0, -0.0130716, 0, 0.937438, 0, 0.0111193, 0, 0.985442, -0.492681, 2.87537, -1.0405)
 pixel_size = 0.007
 text = "\"Space\" in wall to wall_slide
  Released \"Space\" in wall_slide to jump"
@@ -8025,6 +8028,27 @@ script = ExtResource("3_te7yh")
 mesh_vector_data = SubResource("Resource_gwyeg")
 materials = Array[Material]([ExtResource("7_02ygb")])
 
+[node name="Read3" type="Node3D" parent="TileMap"]
+transform = Transform3D(0.73317, 0, 0.164501, 0, 0.822703, 0, -0.631917, 0, 0.373614, -3.40873, 9.68446, -37.5654)
+script = ExtResource("8_v46hc")
+
+[node name="Block_2" type="Node3D" parent="TileMap/Read3"]
+transform = Transform3D(1.06547, 0, 2.98023e-08, 0, 1.2578, 0, -2.5034e-06, 0, 0.177145, -1.47125, 2.35122, -0.925087)
+script = ExtResource("3_te7yh")
+mesh_vector_data = SubResource("Resource_wg2ni")
+materials = Array[Material]([ExtResource("12_fa265")])
+
+[node name="Label3D" type="Label3D" parent="TileMap/Read3"]
+transform = Transform3D(0.838201, 0, -0.0130718, 0, 0.937437, 0, 0.0111188, 0, 0.985441, -0.48484, 2.87537, -0.710564)
+pixel_size = 0.007
+text = "\"Shift\" in air to dash"
+
+[node name="Block_0" type="Node3D" parent="TileMap/Read3"]
+transform = Transform3D(-0.043871, 6.90359e-06, 0.0239862, 4.37114e-09, 90.0003, 0, 0.0239861, -3.77449e-06, 0.0438711, -0.421452, 3.5804, -0.883877)
+script = ExtResource("3_te7yh")
+mesh_vector_data = SubResource("Resource_1uae4")
+materials = Array[Material]([ExtResource("12_fa265")])
+
 [node name="Fullroad2" type="Node3D" parent="TileMap"]
 transform = Transform3D(-0.265851, 0, -0.252357, 0, 1, 0, 0.506974, 0, -0.132333, -25.0639, 0, 19.4832)
 script = ExtResource("8_v46hc")
@@ -8036,16 +8060,48 @@ mesh_vector_data = SubResource("Resource_qe608")
 materials = Array[Material]([ExtResource("16_pdomc")])
 
 [node name="SideWalk" type="Node3D" parent="TileMap/Fullroad2"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1.152, -182, -1.55759, -79.9383)
+transform = Transform3D(1, 0, -5.96046e-08, 0, 1, 0, -1.19209e-07, 0, 1.152, -182, -1.83746, -79.9383)
 script = ExtResource("3_te7yh")
 mesh_vector_data = SubResource("Resource_i06s2")
 materials = Array[Material]([ExtResource("19_jdnna")])
 
 [node name="SideWalk2" type="Node3D" parent="TileMap/Fullroad2"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1.152, -209.133, -1.55759, -79.9383)
+transform = Transform3D(1, 0, -5.96046e-08, 0, 1, 0, -1.19209e-07, 0, 1.152, -209.133, -1.79928, -79.9383)
 script = ExtResource("3_te7yh")
 mesh_vector_data = SubResource("Resource_81bvr")
 materials = Array[Material]([ExtResource("19_jdnna")])
+
+[node name="Read4" type="Node3D" parent="TileMap"]
+transform = Transform3D(0.732973, 0, -0.224686, 0, 0.746217, 0, -0.625449, 0, -0.125182, -2.61227, 14.025, -66.8213)
+script = ExtResource("8_v46hc")
+
+[node name="Block_2" type="Node3D" parent="TileMap/Read4"]
+transform = Transform3D(1.19351, 0, 4.84288e-08, 0, 1.62654, 0, 1.78814e-07, 0, 0.284119, -1.27003, 2.20348, -1.7165)
+script = ExtResource("3_te7yh")
+mesh_vector_data = SubResource("Resource_rseot")
+materials = Array[Material]([ExtResource("12_fa265")])
+
+[node name="Block_1" type="Node3D" parent="TileMap/Read4"]
+transform = Transform3D(0.0994734, 0, 0.0983609, 0, 1.3926, 0, -0.117723, 0, 0.0831126, 0.0498643, 0.802522, -1.54702)
+script = ExtResource("3_te7yh")
+mesh_vector_data = SubResource("Resource_25k06")
+materials = Array[Material]([ExtResource("12_fa265")])
+
+[node name="Label3D" type="Label3D" parent="TileMap/Read4"]
+transform = Transform3D(0.867325, 0, 5.96046e-08, 0, 0.677803, 0, 8.9407e-08, 0, 1, -0.0868134, 3.03746, -1.77792)
+pixel_size = 0.007
+text = "\"Ctrl\" on air to fast fall
+\"Jump\" after fast fall
+have more strength"
+
+[node name="Door_1" parent="TileMap" instance=ExtResource("18_ehp8t")]
+transform = Transform3D(0.481876, 0, 0.876239, 0, 1, 0, -0.876239, 0, 0.481876, 46.0337, 0.91131, -67.5805)
+
+[node name="Door_2" parent="TileMap" instance=ExtResource("18_ehp8t")]
+transform = Transform3D(0.468624, 0, 0.883398, 0, 1, 0, -0.883398, 0, 0.468624, -10.5859, 1.1013, -96.6342)
+
+[node name="Door_3" parent="TileMap" instance=ExtResource("19_ma7y6")]
+transform = Transform3D(0.878717, 0, -0.477343, 0, 1, 0, 0.477343, 0, 0.878717, 21.9088, 0.844412, -89.7684)
 
 [node name="Meshbackground" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.8877, 0)

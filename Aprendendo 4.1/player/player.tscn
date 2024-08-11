@@ -133,11 +133,11 @@ frame_0/duration = 7.0
 frame_1/texture = ExtResource("13_i21e1")
 frame_1/duration = 0.1
 frame_2/texture = ExtResource("14_papdr")
-frame_2/duration = 0.2
+frame_2/duration = 0.1
 frame_3/texture = ExtResource("13_i21e1")
 frame_3/duration = 0.1
 frame_4/texture = ExtResource("19_gcwaa")
-frame_4/duration = 1.0
+frame_4/duration = 0.1
 
 [sub_resource type="AnimatedTexture" id="AnimatedTexture_12ny1"]
 frames = 5
@@ -146,11 +146,11 @@ frame_0/duration = 7.0
 frame_1/texture = ExtResource("16_4wxqf")
 frame_1/duration = 0.1
 frame_2/texture = ExtResource("17_v3jjh")
-frame_2/duration = 0.2
+frame_2/duration = 0.1
 frame_3/texture = ExtResource("16_4wxqf")
 frame_3/duration = 0.1
 frame_4/texture = ExtResource("23_jrxpi")
-frame_4/duration = 1.0
+frame_4/duration = 0.1
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_o4rgc"]
 animations = [{
