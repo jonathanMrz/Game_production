@@ -31,8 +31,8 @@ var fordward = false
 var rewindvalue = {"position":[],"velocity":[],"rotation_x":[],"rotation_y":[]}
 #Objects
 var direction = Vector3.ZERO
-@onready var rewind_effect = $HUD/Crossair/Effects/Rewind_effect
-@onready var fordward_effect = $HUD/Crossair/Effects/Fordward_effect
+@onready var rewind_effect = $HUD/Effects/Rewind_effect
+@onready var fordward_effect = $HUD/Effects/Fordward_effect
 @onready var head = $Head
 @onready var camera = $Head/Camera3D
 @onready var default_body = $Default_colision
@@ -73,11 +73,13 @@ func _unhandled_input(event):
 
 func _input(event):
 	#ability selection
-	if Input.is_action_just_pressed("Q") or Input.is_action_just_pressed("E"):
+	if Input.is_action_just_pressed("Q"):
 		if abilit_select == 0:
-			abilit_select += 1
+			abilit_select = 1
+			$Animation.play("fordward_to_rewind")
 		elif abilit_select == 1:
-			abilit_select -=1
+			abilit_select =0
+			$Animation.play("rewind_to_fordward")
 	
 	#abilitys event
 	if Input.is_action_pressed("M2") and !respawning:
@@ -122,6 +124,7 @@ func _process(delta):
 	if fordward_bar.value == 0:
 		fordward = false
 	if regen_ability1:
+		await get_tree().create_timer(0.1).timeout
 		fordward_bar.value += 0.5
 		if fordward_bar.value >= fordward_bar.max_value:
 			regen_ability1 = false
@@ -130,6 +133,7 @@ func _process(delta):
 	if rewind_bar.value == 0 and !respawning:
 		rewind = false
 	if regen_ability2:
+		await get_tree().create_timer(0.1).timeout
 		rewind_bar.value += 0.5
 		if rewind_bar.value >= rewind_bar.max_value:
 			regen_ability2 = false
@@ -345,8 +349,6 @@ func _physics_process(delta):
 
 #Other funcs
 func rewind_process(_delta: float):
-	if !respawning:
-		rewind_bar.value -= 5
 	if respawning and (is_on_floor() or sliding and wall_jump >0):
 		respawning = false
 		rewind = false
@@ -372,9 +374,11 @@ func rewind_process(_delta: float):
 	ms = 0
 	big_jump_strenght.stop()
 	music_controller.music_pitch(0.98)
+	if !respawning:
+		await get_tree().create_timer(0.2).timeout
+		rewind_bar.value -= 5
 
 func fordward_process(delta):
-	fordward_bar.value -= 3.5
 	regen_ability1 = false
 	music_controller.music_pitch(1.02)
 	$HUD/Crossair/Fordward_crossair_icon.call_deferred("set_visible",true)
@@ -382,6 +386,8 @@ func fordward_process(delta):
 	jump_strength = 6
 	speed = 15
 	$Timers/Stap_timer.set_wait_time(0.2)
+	await get_tree().create_timer(0.1).timeout
+	fordward_bar.value -= 3.5
 
 func _headplayer(time) -> Vector3:
 	var pos = Vector3.ZERO

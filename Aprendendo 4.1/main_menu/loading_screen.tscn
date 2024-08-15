@@ -1,0 +1,267 @@
+[gd_scene load_steps=31 format=3 uid="uid://vaim8c3ygqmt"]
+
+[ext_resource type="Script" path="res://script/loading_screen.gd" id="1_r737y"]
+[ext_resource type="Texture2D" uid="uid://buuitha7gqo4v" path="res://texture/others/futuristic_floor_texture.jpg" id="2_j1sk7"]
+[ext_resource type="Texture2D" uid="uid://6rwme8uc4507" path="res://texture/others/black_noise_background.jpg" id="3_1ygym"]
+[ext_resource type="Shader" path="res://texture/shader/portal.gdshader" id="4_evtxn"]
+[ext_resource type="ArrayMesh" uid="uid://d03yvbbpqt7cc" path="res://objects/Skeleton/skeleton.obj" id="5_adysn"]
+[ext_resource type="Shader" path="res://texture/shader/portalred.gdshader" id="6_clm16"]
+[ext_resource type="Script" path="res://addons/cyclops_level_builder/nodes/cyclops_block.gd" id="7_jm38h"]
+[ext_resource type="Script" path="res://addons/cyclops_level_builder/resources/data_vector_byte.gd" id="8_apsmq"]
+[ext_resource type="Script" path="res://addons/cyclops_level_builder/resources/data_vector_float.gd" id="9_ute5h"]
+[ext_resource type="Script" path="res://addons/cyclops_level_builder/resources/data_vector_int.gd" id="10_mhyhy"]
+[ext_resource type="Script" path="res://addons/cyclops_level_builder/resources/mesh_vector_data.gd" id="11_u2p16"]
+[ext_resource type="Material" uid="uid://cye8rpvv7q5k3" path="res://texture/mesh_texture/Tiles074_2K/Tiles074_2K.tres" id="12_gtuxx"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_v0ewi"]
+render_priority = 0
+shader = ExtResource("4_evtxn")
+shader_parameter/base_color = Color(0.1, 0.1, 1, 1)
+shader_parameter/pulse_color = Color(0.5, 0.7, 1, 1)
+shader_parameter/speed = 1.0
+shader_parameter/scale = 1.0
+shader_parameter/distortion = 1.0
+shader_parameter/shield_power = 0.8
+shader_parameter/rim_power = 2.0
+shader_parameter/pulse_frequency = 2.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_yk4mg"]
+render_priority = 0
+shader = ExtResource("6_clm16")
+shader_parameter/base_color = Color(1, 0, 0, 1)
+shader_parameter/pulse_color = Color(0.5, 0.7, 1, 1)
+shader_parameter/speed = 1.0
+shader_parameter/scale = 1.0
+shader_parameter/distortion = 1.0
+shader_parameter/shield_power = 0.8
+shader_parameter/rim_power = 2.0
+shader_parameter/pulse_frequency = 2.0
+
+[sub_resource type="Resource" id="Resource_0d8sf"]
+script = ExtResource("8_apsmq")
+data = PackedByteArray(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+name = &"selected"
+category = ""
+data_type = 0
+stride = 1
+
+[sub_resource type="Resource" id="Resource_r8gor"]
+script = ExtResource("9_ute5h")
+data = PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1)
+name = &"color"
+category = ""
+data_type = 4
+stride = 4
+
+[sub_resource type="Resource" id="Resource_tw5lw"]
+script = ExtResource("10_mhyhy")
+data = PackedInt32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+name = &"material_index"
+category = ""
+data_type = 1
+stride = 1
+
+[sub_resource type="Resource" id="Resource_5lfi0"]
+script = ExtResource("8_apsmq")
+data = PackedByteArray(0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+name = &"selected"
+category = ""
+data_type = 0
+stride = 1
+
+[sub_resource type="Resource" id="Resource_rsnni"]
+script = ExtResource("9_ute5h")
+data = PackedFloat32Array(1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0)
+name = &"uv_transform"
+category = ""
+data_type = 8
+stride = 6
+
+[sub_resource type="Resource" id="Resource_sd68d"]
+script = ExtResource("8_apsmq")
+data = PackedByteArray(1, 1, 1, 1, 1, 1, 1, 1, 1, 1)
+name = &"visible"
+category = ""
+data_type = 0
+stride = 1
+
+[sub_resource type="Resource" id="Resource_n1uyr"]
+script = ExtResource("9_ute5h")
+data = PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1)
+name = &"color"
+category = ""
+data_type = 4
+stride = 4
+
+[sub_resource type="Resource" id="Resource_n2tnp"]
+script = ExtResource("10_mhyhy")
+data = PackedInt32Array(0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6, 6, 7, 7, 7, 7, 8, 8, 8, 8, 9, 9, 9, 9)
+name = &"face_index"
+category = ""
+data_type = 1
+stride = 1
+
+[sub_resource type="Resource" id="Resource_b85j8"]
+script = ExtResource("9_ute5h")
+data = PackedFloat32Array(0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, -1, 0, 0, -1, 0, 0, -1, 0, 0, -1, 0, 0, -1, 0, 0, -1, 0, 0, -1, 0, 0, -1, 0, -0.382683, 0, -0.92388, -0.382683, 0, -0.92388, -0.382683, 0, -0.92388, -0.382683, 0, -0.92388, 0.382683, 0, -0.923879, 0.382683, 0, -0.923879, 0.382683, 0, -0.923879, 0.382683, 0, -0.923879, 0.92388, 0, -0.382683, 0.92388, 0, -0.382683, 0.92388, 0, -0.382683, 0.92388, 0, -0.382683, 0.92388, 0, 0.382683, 0.92388, 0, 0.382683, 0.92388, 0, 0.382683, 0.92388, 0, 0.382683, 0.382683, 0, 0.92388, 0.382683, 0, 0.92388, 0.382683, 0, 0.92388, 0.382683, 0, 0.92388, -0.382683, 0, 0.92388, -0.382683, 0, 0.92388, -0.382683, 0, 0.92388, -0.382683, 0, 0.92388, -0.92388, 0, 0.382683, -0.92388, 0, 0.382683, -0.92388, 0, 0.382683, -0.92388, 0, 0.382683, -0.923879, 0, -0.382684, -0.923879, 0, -0.382684, -0.923879, 0, -0.382684, -0.923879, 0, -0.382684)
+name = &"normal"
+category = ""
+data_type = 6
+stride = 3
+
+[sub_resource type="Resource" id="Resource_vdfbx"]
+script = ExtResource("10_mhyhy")
+data = PackedInt32Array(0, 1, 2, 3, 4, 5, 6, 7, 15, 14, 13, 12, 11, 10, 9, 8, 1, 0, 8, 9, 2, 1, 9, 10, 3, 2, 10, 11, 4, 3, 11, 12, 5, 4, 12, 13, 6, 5, 13, 14, 7, 6, 14, 15, 0, 7, 15, 8)
+name = &"vertex_index"
+category = ""
+data_type = 1
+stride = 1
+
+[sub_resource type="Resource" id="Resource_16mfi"]
+script = ExtResource("9_ute5h")
+data = PackedFloat32Array(-4.1231, 0, -4.12311, 0, 0, -5.83095, 4.12311, 0, -4.12311, 5.83095, 0, -9.53674e-07, 4.12311, 0, 4.12311, 4.76837e-07, 0, 5.83095, -4.12311, 0, 4.12311, -5.83095, 0, 0, -4.1231, -1, -4.12311, 0, -1, -5.83095, 4.12311, -1, -4.12311, 5.83095, -1, -9.53674e-07, 4.12311, -1, 4.12311, 4.76837e-07, -1, 5.83095, -4.12311, -1, 4.12311, -5.83095, -1, 0)
+name = &"position"
+category = ""
+data_type = 6
+stride = 3
+
+[sub_resource type="Resource" id="Resource_17wb6"]
+script = ExtResource("8_apsmq")
+data = PackedByteArray(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+name = &"selected"
+category = ""
+data_type = 0
+stride = 1
+
+[sub_resource type="Resource" id="Resource_cfeev"]
+script = ExtResource("11_u2p16")
+num_vertices = 16
+num_edges = 24
+num_faces = 10
+num_face_vertices = 48
+active_vertex = -1
+active_edge = -1
+active_face = -1
+active_face_vertex = -1
+edge_vertex_indices = PackedInt32Array(0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 0, 15, 14, 14, 13, 13, 12, 12, 11, 11, 10, 10, 9, 9, 8, 8, 15, 0, 8, 9, 1, 10, 2, 11, 3, 12, 4, 13, 5, 14, 6, 15, 7)
+edge_face_indices = PackedInt32Array(0, 2, 0, 3, 0, 4, 0, 5, 0, 6, 0, 7, 0, 8, 0, 9, 1, 8, 1, 7, 1, 6, 1, 5, 1, 4, 1, 3, 1, 2, 1, 9, 2, 9, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 9)
+face_vertex_count = PackedInt32Array(8, 8, 4, 4, 4, 4, 4, 4, 4, 4)
+face_vertex_indices = PackedInt32Array(0, 1, 2, 3, 4, 5, 6, 7, 15, 14, 13, 12, 11, 10, 9, 8, 1, 0, 8, 9, 2, 1, 9, 10, 3, 2, 10, 11, 4, 3, 11, 12, 5, 4, 12, 13, 6, 5, 13, 14, 7, 6, 14, 15, 0, 7, 15, 8)
+vertex_data = {
+"position": SubResource("Resource_16mfi"),
+"selected": SubResource("Resource_17wb6")
+}
+edge_data = {
+"selected": SubResource("Resource_0d8sf")
+}
+face_data = {
+"color": SubResource("Resource_r8gor"),
+"material_index": SubResource("Resource_tw5lw"),
+"selected": SubResource("Resource_5lfi0"),
+"uv_transform": SubResource("Resource_rsnni"),
+"visible": SubResource("Resource_sd68d")
+}
+face_vertex_data = {
+"color": SubResource("Resource_n1uyr"),
+"face_index": SubResource("Resource_n2tnp"),
+"normal": SubResource("Resource_b85j8"),
+"vertex_index": SubResource("Resource_vdfbx")
+}
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_w1umu"]
+sky_top_color = Color(0, 0, 0, 1)
+sky_horizon_color = Color(0.423529, 0, 0.384314, 1)
+ground_bottom_color = Color(0.258824, 0, 0.388235, 1)
+ground_horizon_color = Color(0.109804, 0.109804, 0.109804, 1)
+
+[sub_resource type="Sky" id="Sky_d1vyl"]
+sky_material = SubResource("ProceduralSkyMaterial_w1umu")
+
+[sub_resource type="Environment" id="Environment_hik20"]
+background_mode = 2
+sky = SubResource("Sky_d1vyl")
+tonemap_mode = 2
+glow_enabled = true
+
+[node name="LoadingScreen" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 6
+script = ExtResource("1_r737y")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -22.0
+offset_top = -54.0
+offset_right = 18.0
+offset_bottom = -31.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="barload" type="TextureProgressBar" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(11.1439, 1.2547)
+pivot_offset = Vector2(20.1007, 18.331)
+nine_patch_stretch = true
+texture_under = ExtResource("2_j1sk7")
+texture_progress = ExtResource("3_1ygym")
+
+[node name="Camerapivot" type="Node3D" parent="."]
+
+[node name="Camera3D" type="Camera3D" parent="Camerapivot"]
+transform = Transform3D(1, 0, 0, 0, 0.894053, 0.447962, 0, -0.447962, 0.894053, 0, 7.68199, 11.1987)
+projection = 1
+fov = 36.4
+size = 8.534
+far = 4005.55
+
+[node name="Background" type="Node3D" parent="."]
+
+[node name="Skeleton" type="MeshInstance3D" parent="Background"]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 1.83415, 3.06153, 0)
+material_override = SubResource("ShaderMaterial_v0ewi")
+mesh = ExtResource("5_adysn")
+skeleton = NodePath("../..")
+
+[node name="Skeleton2" type="MeshInstance3D" parent="Background"]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, -2.4641, 3.06153, 0)
+material_override = SubResource("ShaderMaterial_yk4mg")
+mesh = ExtResource("5_adysn")
+skeleton = NodePath("../..")
+
+[node name="Skeleton3" type="MeshInstance3D" parent="Background"]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, -0.363087, 3.06153, 0)
+mesh = ExtResource("5_adysn")
+skeleton = NodePath("../..")
+
+[node name="Block_1" type="Node3D" parent="Background"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.28429, 0)
+script = ExtResource("7_jm38h")
+mesh_vector_data = SubResource("Resource_cfeev")
+materials = Array[Material]([ExtResource("12_gtuxx")])
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_hik20")

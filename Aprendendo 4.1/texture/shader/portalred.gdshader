@@ -1,6 +1,6 @@
 shader_type spatial;
 
-uniform vec4 base_color : source_color = vec4(1, 0, 0, 1);
+uniform vec4 base_color : source_color = vec4(1, 0.1, 0.1, 1.0);
 uniform vec4 pulse_color : source_color = vec4(0.5, 0.7, 1.0, 1.0);
 uniform float speed : hint_range(0.1, 5.0) = 1.0;
 uniform float scale : hint_range(0.1, 10.0) = 1.0;

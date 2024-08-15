@@ -1,6 +1,285 @@
-[gd_scene load_steps=2 format=3 uid="uid://cjgytex4qws8p"]
+[gd_scene load_steps=39 format=3 uid="uid://cjgytex4qws8p"]
 
 [ext_resource type="Script" path="res://script/menu.gd" id="1_01b40"]
+[ext_resource type="ArrayMesh" uid="uid://delj3wyfv4y3e" path="res://objects/Skeleton/CraneoOBJ.obj" id="2_w1vst"]
+[ext_resource type="Script" path="res://addons/cyclops_level_builder/nodes/cyclops_block.gd" id="3_vgpg1"]
+[ext_resource type="Script" path="res://addons/cyclops_level_builder/resources/data_vector_byte.gd" id="4_v0vf5"]
+[ext_resource type="Script" path="res://addons/cyclops_level_builder/resources/data_vector_int.gd" id="5_h1gj3"]
+[ext_resource type="Script" path="res://addons/cyclops_level_builder/resources/data_vector_float.gd" id="6_vge1t"]
+[ext_resource type="Script" path="res://addons/cyclops_level_builder/resources/mesh_vector_data.gd" id="7_hsn13"]
+[ext_resource type="Material" uid="uid://c3t05thscwwv4" path="res://texture/mesh_texture/Others/Blackcrey.tres" id="8_8a8jx"]
+[ext_resource type="Material" uid="uid://c8ntvgqorcffv" path="res://texture/mesh_texture/Others/purplefloorless.tres" id="9_86b2q"]
+[ext_resource type="Texture2D" uid="uid://bnkh30pvq3uqv" path="res://texture/animation/title/title0.png" id="10_7e11d"]
+[ext_resource type="Texture2D" uid="uid://crgqghpruilj2" path="res://texture/animation/title/title1.png" id="11_2r5dh"]
+[ext_resource type="Texture2D" uid="uid://dixl6v7xhy3kd" path="res://texture/animation/title/title2.png" id="12_eq0sq"]
+[ext_resource type="Texture2D" uid="uid://dxu3sotv1daer" path="res://texture/animation/title/title3.png" id="13_t5g05"]
+[ext_resource type="Texture2D" uid="uid://sxoo1jtpoec7" path="res://texture/animation/title/title4.png" id="14_qybtk"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_44igv"]
+sky_top_color = Color(0.294118, 0.027451, 0.231373, 1)
+sky_horizon_color = Color(0.423529, 0, 0.384314, 1)
+ground_bottom_color = Color(0.258824, 0, 0.388235, 1)
+ground_horizon_color = Color(0.109804, 0.109804, 0.109804, 1)
+
+[sub_resource type="Sky" id="Sky_5gpg5"]
+sky_material = SubResource("ProceduralSkyMaterial_44igv")
+radiance_size = 0
+
+[sub_resource type="Environment" id="Environment_8w2fl"]
+background_mode = 2
+background_color = Color(0.247059, 0.247059, 0.247059, 1)
+sky = SubResource("Sky_5gpg5")
+ambient_light_source = 3
+tonemap_mode = 3
+fog_enabled = true
+fog_light_color = Color(0, 0, 0, 1)
+fog_sun_scatter = 0.45
+fog_density = 0.0381
+
+[sub_resource type="AnimatedTexture" id="AnimatedTexture_1yvyk"]
+frames = 5
+frame_0/texture = ExtResource("10_7e11d")
+frame_0/duration = 0.5
+frame_1/texture = ExtResource("11_2r5dh")
+frame_1/duration = 0.5
+frame_2/texture = ExtResource("12_eq0sq")
+frame_2/duration = 0.5
+frame_3/texture = ExtResource("13_t5g05")
+frame_3/duration = 0.5
+frame_4/texture = ExtResource("14_qybtk")
+frame_4/duration = 0.5
+
+[sub_resource type="Resource" id="Resource_7846t"]
+script = ExtResource("4_v0vf5")
+data = PackedByteArray(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+name = &"selected"
+category = ""
+data_type = 0
+stride = 1
+
+[sub_resource type="Resource" id="Resource_xqgeb"]
+script = ExtResource("6_vge1t")
+data = PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1)
+name = &"color"
+category = ""
+data_type = 4
+stride = 4
+
+[sub_resource type="Resource" id="Resource_iouoq"]
+script = ExtResource("5_h1gj3")
+data = PackedInt32Array(0, 0, 0, 0, 0, 0, 0, 0, 0)
+name = &"material_index"
+category = ""
+data_type = 1
+stride = 1
+
+[sub_resource type="Resource" id="Resource_ps2jf"]
+script = ExtResource("4_v0vf5")
+data = PackedByteArray(0, 0, 0, 0, 0, 0, 0, 0, 0)
+name = &"selected"
+category = ""
+data_type = 0
+stride = 1
+
+[sub_resource type="Resource" id="Resource_y6nij"]
+script = ExtResource("6_vge1t")
+data = PackedFloat32Array(1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0)
+name = &"uv_transform"
+category = ""
+data_type = 8
+stride = 6
+
+[sub_resource type="Resource" id="Resource_qlocm"]
+script = ExtResource("4_v0vf5")
+data = PackedByteArray(1, 1, 1, 1, 1, 1, 1, 1, 1)
+name = &"visible"
+category = ""
+data_type = 0
+stride = 1
+
+[sub_resource type="Resource" id="Resource_s3exn"]
+script = ExtResource("6_vge1t")
+data = PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1)
+name = &"color"
+category = ""
+data_type = 4
+stride = 4
+
+[sub_resource type="Resource" id="Resource_m77dc"]
+script = ExtResource("5_h1gj3")
+data = PackedInt32Array(0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6, 6, 7, 7, 7, 7, 8, 8, 8, 8)
+name = &"face_index"
+category = ""
+data_type = 1
+stride = 1
+
+[sub_resource type="Resource" id="Resource_8m2pf"]
+script = ExtResource("6_vge1t")
+data = PackedFloat32Array(0, -1, 0, 0, -1, 0, 0, -1, 0, 0, -1, 0, 0, -1, 0, 0, -1, 0, 0, -1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+name = &"normal"
+category = ""
+data_type = 6
+stride = 3
+
+[sub_resource type="Resource" id="Resource_8rg04"]
+script = ExtResource("5_h1gj3")
+data = PackedInt32Array(0, 1, 2, 3, 4, 5, 6, 13, 12, 11, 10, 9, 8, 7, 1, 0, 7, 8, 2, 1, 8, 9, 3, 2, 9, 10, 4, 3, 10, 11, 5, 4, 11, 12, 6, 5, 12, 13, 0, 6, 13, 7)
+name = &"vertex_index"
+category = ""
+data_type = 1
+stride = 1
+
+[sub_resource type="Resource" id="Resource_lq31h"]
+script = ExtResource("6_vge1t")
+data = PackedFloat32Array(-1, 0, 0, -0.62349, 0, 0.781832, 0.222521, 0, 0.974928, 0.900969, 0, 0.433884, 0.900969, 0, -0.433884, 0.222521, 0, -0.974928, -0.62349, 0, -0.781832, -1, 0, 0, -0.62349, 0, 0.781832, 0.222521, 0, 0.974928, 0.900969, 0, 0.433884, 0.900969, 0, -0.433884, 0.222521, 0, -0.974928, -0.62349, 0, -0.781832)
+name = &"position"
+category = ""
+data_type = 6
+stride = 3
+
+[sub_resource type="Resource" id="Resource_bcoml"]
+script = ExtResource("4_v0vf5")
+data = PackedByteArray(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+name = &"selected"
+category = ""
+data_type = 0
+stride = 1
+
+[sub_resource type="Resource" id="Resource_3iiew"]
+script = ExtResource("7_hsn13")
+num_vertices = 14
+num_edges = 21
+num_faces = 9
+num_face_vertices = 42
+active_vertex = -1
+active_edge = -1
+active_face = -1
+active_face_vertex = -1
+edge_vertex_indices = PackedInt32Array(0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 0, 13, 12, 12, 11, 11, 10, 10, 9, 9, 8, 8, 7, 7, 13, 0, 7, 8, 1, 9, 2, 10, 3, 11, 4, 12, 5, 13, 6)
+edge_face_indices = PackedInt32Array(0, 2, 0, 3, 0, 4, 0, 5, 0, 6, 0, 7, 0, 8, 1, 7, 1, 6, 1, 5, 1, 4, 1, 3, 1, 2, 1, 8, 2, 8, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8)
+face_vertex_count = PackedInt32Array(7, 7, 4, 4, 4, 4, 4, 4, 4)
+face_vertex_indices = PackedInt32Array(0, 1, 2, 3, 4, 5, 6, 13, 12, 11, 10, 9, 8, 7, 1, 0, 7, 8, 2, 1, 8, 9, 3, 2, 9, 10, 4, 3, 10, 11, 5, 4, 11, 12, 6, 5, 12, 13, 0, 6, 13, 7)
+vertex_data = {
+"position": SubResource("Resource_lq31h"),
+"selected": SubResource("Resource_bcoml")
+}
+edge_data = {
+"selected": SubResource("Resource_7846t")
+}
+face_data = {
+"color": SubResource("Resource_xqgeb"),
+"material_index": SubResource("Resource_iouoq"),
+"selected": SubResource("Resource_ps2jf"),
+"uv_transform": SubResource("Resource_y6nij"),
+"visible": SubResource("Resource_qlocm")
+}
+face_vertex_data = {
+"color": SubResource("Resource_s3exn"),
+"face_index": SubResource("Resource_m77dc"),
+"normal": SubResource("Resource_8m2pf"),
+"vertex_index": SubResource("Resource_8rg04")
+}
+
+[sub_resource type="SphereMesh" id="SphereMesh_pxrds"]
+material = ExtResource("8_8a8jx")
+
+[sub_resource type="BoxMesh" id="BoxMesh_v8cs4"]
+material = ExtResource("9_86b2q")
+size = Vector3(76, 50, 1)
+
+[sub_resource type="Animation" id="Animation_kie5n"]
+resource_name = "BackSelectFase"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("VBoxContainer:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(-1000, 250), Vector2(0, 250)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Select_Fase:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0, 200), Vector2(-1000, 200)]
+}
+
+[sub_resource type="Animation" id="Animation_57q2k"]
+resource_name = "SelectFase"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("VBoxContainer:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0, 250), Vector2(-1000, 200)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Select_Fase:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(-1000, 100), Vector2(0, 100)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_5k7hx"]
+_data = {
+"BackSelectFase": SubResource("Animation_kie5n"),
+"SelectFase": SubResource("Animation_57q2k")
+}
+
+[sub_resource type="Animation" id="Animation_hejvi"]
+resource_name = "skullanimation"
+length = 2.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("back:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(5, 10, -5), Vector3(5, -30, -5)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("back2:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(9, 10, 5), Vector3(9, 50, 5)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_o1bym"]
+_data = {
+"skullanimation": SubResource("Animation_hejvi")
+}
 
 [node name="Menu" type="Control"]
 layout_mode = 3
@@ -9,36 +288,139 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 1
 script = ExtResource("1_01b40")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.28944, -0.325792, 0.900047, 0.391643, -0.898293, -0.199211, 0.873407, 0.294837, 0.387596, 78.5799, -35.8713, 0)
+light_energy = 0.5
+light_indirect_energy = 0.0
+light_volumetric_fog_energy = 0.0
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_8w2fl")
+
+[node name="title" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+grow_horizontal = 2
+mouse_filter = 2
+
+[node name="TextureRect" type="TextureRect" parent="title"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -497.0
+offset_top = -218.0
+offset_right = 1423.0
+offset_bottom = 862.0
+grow_horizontal = 2
+scale = Vector2(0.489885, 0.525839)
+mouse_filter = 2
+texture = SubResource("AnimatedTexture_1yvyk")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
+anchors_preset = 4
 anchor_top = 0.5
-anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -421.0
-offset_top = -68.0
-offset_right = 79.0
-offset_bottom = 132.0
-grow_horizontal = 2
+offset_top = -74.0
+offset_right = 499.997
+offset_bottom = 126.0
 grow_vertical = 2
-theme_override_constants/separation = 9
 
-[node name="Button" type="Button" parent="VBoxContainer"]
+[node name="Start" type="Button" parent="VBoxContainer"]
 layout_mode = 2
+mouse_filter = 1
 text = "Start"
 
-[node name="Button2" type="Button" parent="VBoxContainer"]
+[node name="Options" type="Button" parent="VBoxContainer"]
 layout_mode = 2
+mouse_filter = 1
 text = "Options
 "
 
-[node name="Button3" type="Button" parent="VBoxContainer"]
+[node name="Quit" type="Button" parent="VBoxContainer"]
 layout_mode = 2
+mouse_filter = 1
 text = "Quit"
 
-[connection signal="pressed" from="VBoxContainer/Button" to="." method="_on_button_pressed"]
-[connection signal="pressed" from="VBoxContainer/Button2" to="." method="_on_button_2_pressed"]
-[connection signal="pressed" from="VBoxContainer/Button3" to="." method="_on_button_3_pressed"]
+[node name="Select_Fase" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_left = -1000.0
+offset_top = 100.0
+offset_right = -793.0
+offset_bottom = 166.0
+
+[node name="Zero" type="Button" parent="Select_Fase"]
+layout_mode = 2
+mouse_filter = 1
+text = "ServerZero :: Creation"
+alignment = 0
+
+[node name="One" type="Button" parent="Select_Fase"]
+layout_mode = 2
+mouse_filter = 1
+text = "ServerOne :: Rise"
+alignment = 0
+
+[node name="CraneoObj" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.819152, 0, -0.573576, 0, 1, 0, 0.573576, 0, 0.819152, -1.17, 10, 1.388)
+mesh = ExtResource("2_w1vst")
+
+[node name="Block_2" type="Node3D" parent="CraneoObj"]
+transform = Transform3D(0.628256, 0.193307, -0.0193506, 0, 0.12827, 0.708908, 0.130128, -0.933282, 0.0934242, -0.987235, 3.71332, 0.40324)
+script = ExtResource("3_vgpg1")
+mesh_vector_data = SubResource("Resource_3iiew")
+materials = Array[Material]([ExtResource("8_8a8jx")])
+
+[node name="Block_3" type="Node3D" parent="CraneoObj"]
+transform = Transform3D(0.628256, 0.193307, -0.0193506, 0, 0.12827, 0.708908, 0.130128, -0.933282, 0.0934242, 0.935844, 3.71332, 0.40324)
+script = ExtResource("3_vgpg1")
+mesh_vector_data = SubResource("Resource_3iiew")
+materials = Array[Material]([ExtResource("8_8a8jx")])
+
+[node name="Block_4" type="Node3D" parent="CraneoObj"]
+transform = Transform3D(0.618475, 0.253531, -0.0253791, 0, 0.12827, 0.708908, 0.170669, -0.918752, 0.0919697, -0.0707924, 2.95217, 0.376563)
+script = ExtResource("3_vgpg1")
+mesh_vector_data = SubResource("Resource_3iiew")
+materials = Array[Material]([ExtResource("8_8a8jx")])
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="CraneoObj"]
+transform = Transform3D(2.48677, 0, 0, 0, 2.10672, 0, 0, 0, 2.97917, 0, 2.05427, -0.816903)
+mesh = SubResource("SphereMesh_pxrds")
+
+[node name="pivot" type="Node3D" parent="."]
+transform = Transform3D(0.872138, 0, -0.489261, 0, 1, 0, 0.489261, 0, 0.872138, -2.91361, 0, 2.37457)
+
+[node name="Camera3D" type="Camera3D" parent="pivot"]
+transform = Transform3D(0.996204, 0, 0.0870513, 0, 1, 0, -0.0870513, 0, 0.996204, -0.983673, 12.8132, 9.76289)
+fov = 42.8
+
+[node name="back" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 2.249, 0, 0, 0, 1, 5, 10, -5)
+mesh = SubResource("BoxMesh_v8cs4")
+
+[node name="back2" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.052336, 0, 0.998629, 0, 2.24911, 0, -0.998629, 0, 0.052336, 9, 10, 5)
+mesh = SubResource("BoxMesh_v8cs4")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_5k7hx")
+}
+speed_scale = 2.0
+
+[node name="AnimationPlayer2" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_o1bym")
+}
+speed_scale = 0.2
+
+[connection signal="pressed" from="VBoxContainer/Start" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/Options" to="." method="_on_button_2_pressed"]
+[connection signal="pressed" from="VBoxContainer/Quit" to="." method="_on_button_3_pressed"]
+[connection signal="pressed" from="Select_Fase/Zero" to="." method="_on_zero_pressed"]
+[connection signal="pressed" from="Select_Fase/One" to="." method="_on_one_pressed"]

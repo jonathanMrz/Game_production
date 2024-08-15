@@ -4,4 +4,4 @@
 
 [resource]
 script = ExtResource("1_3sifp")
-active_material_path = "res://texture/mesh_texture/Others/WhiteLight.tres"
+active_material_path = "res://texture/mesh_texture/Tiles074_2K/Tiles074_2K.tres"

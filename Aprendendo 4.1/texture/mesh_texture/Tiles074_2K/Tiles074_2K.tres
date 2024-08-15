@@ -6,8 +6,10 @@
 
 [resource]
 albedo_texture = ExtResource("1_xtib8")
+emission_enabled = true
 normal_enabled = true
 normal_texture = ExtResource("3_xk5bw")
 clearcoat_enabled = true
 clearcoat = 0.0
 clearcoat_texture = ExtResource("2_rwm8l")
+refraction_scale = 1.0
