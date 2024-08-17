@@ -1,6 +1,7 @@
-[gd_scene load_steps=39 format=3 uid="uid://cjgytex4qws8p"]
+[gd_scene load_steps=40 format=3 uid="uid://cjgytex4qws8p"]
 
 [ext_resource type="Script" path="res://script/menu.gd" id="1_01b40"]
+[ext_resource type="Shader" path="res://texture/shader/titlemenu.gdshader" id="2_vaxj4"]
 [ext_resource type="ArrayMesh" uid="uid://delj3wyfv4y3e" path="res://objects/Skeleton/CraneoOBJ.obj" id="2_w1vst"]
 [ext_resource type="Script" path="res://addons/cyclops_level_builder/nodes/cyclops_block.gd" id="3_vgpg1"]
 [ext_resource type="Script" path="res://addons/cyclops_level_builder/resources/data_vector_byte.gd" id="4_v0vf5"]
@@ -9,11 +10,8 @@
 [ext_resource type="Script" path="res://addons/cyclops_level_builder/resources/mesh_vector_data.gd" id="7_hsn13"]
 [ext_resource type="Material" uid="uid://c3t05thscwwv4" path="res://texture/mesh_texture/Others/Blackcrey.tres" id="8_8a8jx"]
 [ext_resource type="Material" uid="uid://c8ntvgqorcffv" path="res://texture/mesh_texture/Others/purplefloorless.tres" id="9_86b2q"]
-[ext_resource type="Texture2D" uid="uid://bnkh30pvq3uqv" path="res://texture/animation/title/title0.png" id="10_7e11d"]
-[ext_resource type="Texture2D" uid="uid://crgqghpruilj2" path="res://texture/animation/title/title1.png" id="11_2r5dh"]
-[ext_resource type="Texture2D" uid="uid://dixl6v7xhy3kd" path="res://texture/animation/title/title2.png" id="12_eq0sq"]
-[ext_resource type="Texture2D" uid="uid://dxu3sotv1daer" path="res://texture/animation/title/title3.png" id="13_t5g05"]
-[ext_resource type="Texture2D" uid="uid://sxoo1jtpoec7" path="res://texture/animation/title/title4.png" id="14_qybtk"]
+[ext_resource type="ArrayMesh" uid="uid://c0jum2ue53efo" path="res://texture/menu/output.obj" id="10_nmdqr"]
+[ext_resource type="Theme" uid="uid://binvd3pgmo5ek" path="res://texture/menu/options.tres" id="12_0qyqa"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_44igv"]
 sky_top_color = Color(0.294118, 0.027451, 0.231373, 1)
@@ -36,18 +34,20 @@ fog_light_color = Color(0, 0, 0, 1)
 fog_sun_scatter = 0.45
 fog_density = 0.0381
 
-[sub_resource type="AnimatedTexture" id="AnimatedTexture_1yvyk"]
-frames = 5
-frame_0/texture = ExtResource("10_7e11d")
-frame_0/duration = 0.5
-frame_1/texture = ExtResource("11_2r5dh")
-frame_1/duration = 0.5
-frame_2/texture = ExtResource("12_eq0sq")
-frame_2/duration = 0.5
-frame_3/texture = ExtResource("13_t5g05")
-frame_3/duration = 0.5
-frame_4/texture = ExtResource("14_qybtk")
-frame_4/duration = 0.5
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_omlp2"]
+render_priority = 0
+shader = ExtResource("2_vaxj4")
+shader_parameter/base_color = Color(0, 0, 0, 1)
+shader_parameter/pulse_color = Color(1, 1, 1, 1)
+shader_parameter/speed = 0.2
+shader_parameter/scale = 0.1
+shader_parameter/distortion = 0.1
+shader_parameter/shield_power = 0.5
+shader_parameter/rim_power = 2.0
+shader_parameter/pulse_frequency = 0.5
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ajtpg"]
+albedo_color = Color(0.791999, 0.791999, 0.791999, 1)
 
 [sub_resource type="Resource" id="Resource_7846t"]
 script = ExtResource("4_v0vf5")
@@ -199,7 +199,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 1),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Vector2(-1000, 250), Vector2(0, 250)]
+"values": [Vector2(-1000, 250), Vector2(20, 250)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -211,7 +211,7 @@ tracks/1/keys = {
 "times": PackedFloat32Array(0, 1),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Vector2(0, 200), Vector2(-1000, 200)]
+"values": [Vector2(20, 250), Vector2(-1000, 250)]
 }
 
 [sub_resource type="Animation" id="Animation_57q2k"]
@@ -226,7 +226,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 1),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Vector2(0, 250), Vector2(-1000, 200)]
+"values": [Vector2(20, 250), Vector2(-1000, 250)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -238,7 +238,7 @@ tracks/1/keys = {
 "times": PackedFloat32Array(0, 1),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Vector2(-1000, 100), Vector2(0, 100)]
+"values": [Vector2(-1000, 250), Vector2(20, 250)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_5k7hx"]
@@ -281,6 +281,40 @@ _data = {
 "skullanimation": SubResource("Animation_hejvi")
 }
 
+[sub_resource type="Animation" id="Animation_i6imy"]
+resource_name = "titleanimation"
+length = 3.5
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../Title:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1, 1.9, 2.9),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(-9.5, 14.5, 2.5), Vector3(-9.5, 14.4, 2.5), Vector3(-9.5, 14.5, 2.5), Vector3(-9.5, 14.7, 2.5)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../Title:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.2, 1.2, 2.1, 2.9),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(-0.0453786, -0.322886, 0.0436332), Vector3(0.0523599, -0.314159, -0.0436332), Vector3(-0.0453786, -0.322886, 0.0872665), Vector3(0.0349066, -0.315905, -0.0436332)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_6j4p7"]
+_data = {
+"titleanimation": SubResource("Animation_i6imy")
+}
+
 [node name="Menu" type="Control"]
 layout_mode = 3
 anchors_preset = 15
@@ -294,101 +328,49 @@ script = ExtResource("1_01b40")
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.28944, -0.325792, 0.900047, 0.391643, -0.898293, -0.199211, 0.873407, 0.294837, 0.387596, 78.5799, -35.8713, 0)
 light_energy = 0.5
-light_indirect_energy = 0.0
-light_volumetric_fog_energy = 0.0
+shadow_enabled = true
+shadow_bias = 0.0
+shadow_normal_bias = 0.0
+shadow_transmittance_bias = -16.0
+shadow_opacity = 0.0
+directional_shadow_fade_start = 0.0
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_8w2fl")
 
-[node name="title" type="Control" parent="."]
-layout_mode = 1
-anchors_preset = 10
-anchor_right = 1.0
-grow_horizontal = 2
-mouse_filter = 2
+[node name="Title" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.00950603, 8.66698e-05, -0.00310285, -0.00020584, 0.0099917, -0.000351532, 0.00309723, 0.000398037, 0.00949993, -9.5, 14.4398, 2.5)
+material_override = SubResource("ShaderMaterial_omlp2")
+cast_shadow = 2
+mesh = ExtResource("10_nmdqr")
 
-[node name="TextureRect" type="TextureRect" parent="title"]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -497.0
-offset_top = -218.0
-offset_right = 1423.0
-offset_bottom = 862.0
-grow_horizontal = 2
-scale = Vector2(0.489885, 0.525839)
-mouse_filter = 2
-texture = SubResource("AnimatedTexture_1yvyk")
-
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
-layout_mode = 1
-anchors_preset = 4
-anchor_top = 0.5
-anchor_bottom = 0.5
-offset_top = -74.0
-offset_right = 499.997
-offset_bottom = 126.0
-grow_vertical = 2
-
-[node name="Start" type="Button" parent="VBoxContainer"]
-layout_mode = 2
-mouse_filter = 1
-text = "Start"
-
-[node name="Options" type="Button" parent="VBoxContainer"]
-layout_mode = 2
-mouse_filter = 1
-text = "Options
-"
-
-[node name="Quit" type="Button" parent="VBoxContainer"]
-layout_mode = 2
-mouse_filter = 1
-text = "Quit"
-
-[node name="Select_Fase" type="VBoxContainer" parent="."]
-layout_mode = 0
-offset_left = -1000.0
-offset_top = 100.0
-offset_right = -793.0
-offset_bottom = 166.0
-
-[node name="Zero" type="Button" parent="Select_Fase"]
-layout_mode = 2
-mouse_filter = 1
-text = "ServerZero :: Creation"
-alignment = 0
-
-[node name="One" type="Button" parent="Select_Fase"]
-layout_mode = 2
-mouse_filter = 1
-text = "ServerOne :: Rise"
-alignment = 0
-
-[node name="CraneoObj" type="MeshInstance3D" parent="."]
+[node name="skullpivot" type="Node3D" parent="."]
 transform = Transform3D(0.819152, 0, -0.573576, 0, 1, 0, 0.573576, 0, 0.819152, -1.17, 10, 1.388)
-mesh = ExtResource("2_w1vst")
 
-[node name="Block_2" type="Node3D" parent="CraneoObj"]
+[node name="Skull" type="MeshInstance3D" parent="skullpivot"]
+material_override = SubResource("StandardMaterial3D_ajtpg")
+mesh = ExtResource("2_w1vst")
+skeleton = NodePath("../..")
+
+[node name="Block_2" type="Node3D" parent="skullpivot/Skull"]
 transform = Transform3D(0.628256, 0.193307, -0.0193506, 0, 0.12827, 0.708908, 0.130128, -0.933282, 0.0934242, -0.987235, 3.71332, 0.40324)
 script = ExtResource("3_vgpg1")
 mesh_vector_data = SubResource("Resource_3iiew")
 materials = Array[Material]([ExtResource("8_8a8jx")])
 
-[node name="Block_3" type="Node3D" parent="CraneoObj"]
+[node name="Block_3" type="Node3D" parent="skullpivot/Skull"]
 transform = Transform3D(0.628256, 0.193307, -0.0193506, 0, 0.12827, 0.708908, 0.130128, -0.933282, 0.0934242, 0.935844, 3.71332, 0.40324)
 script = ExtResource("3_vgpg1")
 mesh_vector_data = SubResource("Resource_3iiew")
 materials = Array[Material]([ExtResource("8_8a8jx")])
 
-[node name="Block_4" type="Node3D" parent="CraneoObj"]
+[node name="Block_4" type="Node3D" parent="skullpivot/Skull"]
 transform = Transform3D(0.618475, 0.253531, -0.0253791, 0, 0.12827, 0.708908, 0.170669, -0.918752, 0.0919697, -0.0707924, 2.95217, 0.376563)
 script = ExtResource("3_vgpg1")
 mesh_vector_data = SubResource("Resource_3iiew")
 materials = Array[Material]([ExtResource("8_8a8jx")])
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="CraneoObj"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="skullpivot/Skull"]
 transform = Transform3D(2.48677, 0, 0, 0, 2.10672, 0, 0, 0, 2.97917, 0, 2.05427, -0.816903)
 mesh = SubResource("SphereMesh_pxrds")
 
@@ -396,16 +378,73 @@ mesh = SubResource("SphereMesh_pxrds")
 transform = Transform3D(0.872138, 0, -0.489261, 0, 1, 0, 0.489261, 0, 0.872138, -2.91361, 0, 2.37457)
 
 [node name="Camera3D" type="Camera3D" parent="pivot"]
-transform = Transform3D(0.996204, 0, 0.0870513, 0, 1, 0, -0.0870513, 0, 0.996204, -0.983673, 12.8132, 9.76289)
+transform = Transform3D(0.996203, 0, 0.0870512, 0, 1, 0, -0.0870512, 0, 0.996203, -0.983673, 12.8132, 9.76289)
 fov = 42.8
 
 [node name="back" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 2.249, 0, 0, 0, 1, 5, 10, -5)
+transform = Transform3D(1, 0, 0, 0, 2.249, 0, 0, 0, 1, 5, -26.5844, -5)
 mesh = SubResource("BoxMesh_v8cs4")
 
 [node name="back2" type="MeshInstance3D" parent="."]
-transform = Transform3D(0.052336, 0, 0.998629, 0, 2.24911, 0, -0.998629, 0, 0.052336, 9, 10, 5)
+transform = Transform3D(0.052336, 0, 0.998629, 0, 2.24911, 0, -0.998629, 0, 0.052336, 9, 46.5844, 5)
 mesh = SubResource("BoxMesh_v8cs4")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 20.0
+offset_top = -74.0
+offset_right = 309.0
+offset_bottom = 111.0
+grow_vertical = 2
+theme_override_constants/separation = 25
+alignment = 1
+
+[node name="Start" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+mouse_filter = 1
+theme = ExtResource("12_0qyqa")
+theme_override_font_sizes/font_size = 25
+text = "    Start     "
+text_direction = 1
+
+[node name="Options" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+mouse_filter = 1
+theme = ExtResource("12_0qyqa")
+theme_override_font_sizes/font_size = 25
+text = "Options
+"
+
+[node name="Quit" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+mouse_filter = 1
+theme = ExtResource("12_0qyqa")
+theme_override_font_sizes/font_size = 25
+text = "Quit"
+
+[node name="Select_Fase" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_left = -1000.0
+offset_top = 250.0
+offset_right = -749.0
+offset_bottom = 351.0
+theme_override_constants/separation = 25
+
+[node name="Zero" type="Button" parent="Select_Fase"]
+layout_mode = 2
+mouse_filter = 1
+theme = ExtResource("12_0qyqa")
+text = "ServerZero :: Creation"
+
+[node name="One" type="Button" parent="Select_Fase"]
+layout_mode = 2
+mouse_filter = 1
+theme = ExtResource("12_0qyqa")
+text = "ServerOne :: Rise"
+icon_alignment = 1
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -418,6 +457,12 @@ libraries = {
 "": SubResource("AnimationLibrary_o1bym")
 }
 speed_scale = 0.2
+
+[node name="AnimationPlayer3" type="AnimationPlayer" parent="."]
+root_node = NodePath("../AnimationPlayer2")
+libraries = {
+"": SubResource("AnimationLibrary_6j4p7")
+}
 
 [connection signal="pressed" from="VBoxContainer/Start" to="." method="_on_button_pressed"]
 [connection signal="pressed" from="VBoxContainer/Options" to="." method="_on_button_2_pressed"]

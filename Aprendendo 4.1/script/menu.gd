@@ -1,16 +1,19 @@
 extends Control
 var select_fase_menu = false
+@onready var animationtitle = $AnimationPlayer3
 @onready var animationback = $AnimationPlayer2
 @onready var animation = $AnimationPlayer
-@onready var skull = $CraneoObj
+@onready var skull = $skullpivot/Skull
+@onready var skullpivot = $skullpivot
 func _ready():
+	animationtitle.play("titleanimation")
 	animationback.play("skullanimation")
 func _process(delta):
 	if Input.is_action_just_pressed("Esc") and select_fase_menu:
 		select_fase_menu = false
 		animation.play("BackSelectFase")
 #Main_menu
-func _on_button_pressed():
+func _on_button_pressed():	
 	animation.play("SelectFase")
 	select_fase_menu = true
 	pass # Replace with function body.
@@ -33,4 +36,7 @@ func _on_one_pressed():
 func _unhandled_input(event):
 	
 	if event is InputEventMouseMotion:
-		skull.rotate_y(event.relative.x * 0.0008)
+		skull.rotate_y(event.relative.x * 0.0009)
+		
+		skullpivot.rotate_x(event.relative.y * 0.0009)
+		skullpivot.rotation.x = clamp(skullpivot.rotation.x, deg_to_rad(-100), deg_to_rad(45))
