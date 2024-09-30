@@ -1,4 +1,4 @@
-[gd_scene load_steps=40 format=3 uid="uid://cjgytex4qws8p"]
+[gd_scene load_steps=47 format=3 uid="uid://cjgytex4qws8p"]
 
 [ext_resource type="Script" path="res://script/menu.gd" id="1_01b40"]
 [ext_resource type="Shader" path="res://texture/shader/titlemenu.gdshader" id="2_vaxj4"]
@@ -12,6 +12,10 @@
 [ext_resource type="Material" uid="uid://c8ntvgqorcffv" path="res://texture/mesh_texture/Others/purplefloorless.tres" id="9_86b2q"]
 [ext_resource type="ArrayMesh" uid="uid://c0jum2ue53efo" path="res://texture/menu/output.obj" id="10_nmdqr"]
 [ext_resource type="Theme" uid="uid://binvd3pgmo5ek" path="res://texture/menu/options.tres" id="12_0qyqa"]
+[ext_resource type="AudioStream" uid="uid://dusyk7udatrvs" path="res://sound/sfx/click.mp3" id="13_llv0o"]
+[ext_resource type="AudioStream" uid="uid://dbqi4j28wicd7" path="res://sound/sfx/click2.mp3" id="14_m00me"]
+[ext_resource type="AudioStream" uid="uid://d0ie01qihoelg" path="res://sound/sfx/click3.mp3" id="15_l0jn1"]
+[ext_resource type="AudioStream" uid="uid://cvp2hywamuypm" path="res://sound/sfx/click4.mp3" id="16_5c7f1"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_44igv"]
 sky_top_color = Color(0.294118, 0.027451, 0.231373, 1)
@@ -315,6 +319,42 @@ _data = {
 "titleanimation": SubResource("Animation_i6imy")
 }
 
+[sub_resource type="Animation" id="Animation_ee71r"]
+resource_name = "fadin"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ColorRect:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, 700)]
+}
+
+[sub_resource type="Animation" id="Animation_rydqg"]
+resource_name = "fadon"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ColorRect:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0, 700), Vector2(0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_4icid"]
+_data = {
+"fadin": SubResource("Animation_ee71r"),
+"fadon": SubResource("Animation_rydqg")
+}
+
 [node name="Menu" type="Control"]
 layout_mode = 3
 anchors_preset = 15
@@ -339,7 +379,7 @@ directional_shadow_fade_start = 0.0
 environment = SubResource("Environment_8w2fl")
 
 [node name="Title" type="MeshInstance3D" parent="."]
-transform = Transform3D(0.00950603, 8.66698e-05, -0.00310285, -0.00020584, 0.0099917, -0.000351532, 0.00309723, 0.000398037, 0.00949993, -9.5, 14.4398, 2.5)
+transform = Transform3D(0.00948823, -0.000127141, -0.00315548, 0.000218079, 0.00999442, 0.000253046, 0.0031505, -0.000308911, 0.00948572, -9.5, 14.5, 2.5)
 material_override = SubResource("ShaderMaterial_omlp2")
 cast_shadow = 2
 mesh = ExtResource("10_nmdqr")
@@ -382,25 +422,24 @@ transform = Transform3D(0.996203, 0, 0.0870512, 0, 1, 0, -0.0870512, 0, 0.996203
 fov = 42.8
 
 [node name="back" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 2.249, 0, 0, 0, 1, 5, -26.5844, -5)
+transform = Transform3D(1, 0, 0, 0, 2.249, 0, 0, 0, 1, 5, 10, -5)
 mesh = SubResource("BoxMesh_v8cs4")
 
 [node name="back2" type="MeshInstance3D" parent="."]
-transform = Transform3D(0.052336, 0, 0.998629, 0, 2.24911, 0, -0.998629, 0, 0.052336, 9, 46.5844, 5)
+transform = Transform3D(0.052336, 0, 0.998629, 0, 2.24911, 0, -0.998629, 0, 0.052336, 9, 10, 5)
 mesh = SubResource("BoxMesh_v8cs4")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 1
-anchors_preset = 4
-anchor_top = 0.5
-anchor_bottom = 0.5
-offset_left = 20.0
-offset_top = -74.0
-offset_right = 309.0
-offset_bottom = 111.0
+anchors_preset = -1
+anchor_left = 0.0173611
+anchor_top = 0.385802
+anchor_right = 0.268229
+anchor_bottom = 0.671296
 grow_vertical = 2
 theme_override_constants/separation = 25
 alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="Start" type="Button" parent="VBoxContainer"]
 layout_mode = 2
@@ -427,22 +466,33 @@ text = "Quit"
 
 [node name="Select_Fase" type="VBoxContainer" parent="."]
 layout_mode = 0
-offset_left = -1000.0
-offset_top = 250.0
-offset_right = -749.0
-offset_bottom = 351.0
+anchor_left = -0.868056
+anchor_top = 0.385802
+anchor_right = -0.650174
+anchor_bottom = 0.541667
 theme_override_constants/separation = 25
+metadata/_edit_use_anchors_ = true
+
+[node name="Back" type="Button" parent="Select_Fase"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme = ExtResource("12_0qyqa")
+text = "<"
 
 [node name="Zero" type="Button" parent="Select_Fase"]
 layout_mode = 2
 mouse_filter = 1
 theme = ExtResource("12_0qyqa")
+theme_override_font_sizes/font_size = 25
+disabled = true
 text = "ServerZero :: Creation"
 
 [node name="One" type="Button" parent="Select_Fase"]
 layout_mode = 2
 mouse_filter = 1
 theme = ExtResource("12_0qyqa")
+theme_override_font_sizes/font_size = 25
 text = "ServerOne :: Rise"
 icon_alignment = 1
 
@@ -464,8 +514,42 @@ libraries = {
 "": SubResource("AnimationLibrary_6j4p7")
 }
 
+[node name="AnimationPlayer4" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_4icid")
+}
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 700.0
+offset_bottom = 700.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+metadata/_edit_use_anchors_ = true
+
+[node name="TrueClickSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("13_llv0o")
+volume_db = -5.0
+
+[node name="FalseClickSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("14_m00me")
+volume_db = -5.0
+
+[node name="FaseClickSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("15_l0jn1")
+volume_db = -5.0
+
+[node name="LeaveClickSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("16_5c7f1")
+volume_db = -5.0
+
 [connection signal="pressed" from="VBoxContainer/Start" to="." method="_on_button_pressed"]
 [connection signal="pressed" from="VBoxContainer/Options" to="." method="_on_button_2_pressed"]
 [connection signal="pressed" from="VBoxContainer/Quit" to="." method="_on_button_3_pressed"]
+[connection signal="pressed" from="Select_Fase/Back" to="." method="_on_back_pressed"]
 [connection signal="pressed" from="Select_Fase/Zero" to="." method="_on_zero_pressed"]
 [connection signal="pressed" from="Select_Fase/One" to="." method="_on_one_pressed"]

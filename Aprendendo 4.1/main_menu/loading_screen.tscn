@@ -1,8 +1,8 @@
-[gd_scene load_steps=31 format=3 uid="uid://vaim8c3ygqmt"]
+[gd_scene load_steps=32 format=3 uid="uid://vaim8c3ygqmt"]
 
 [ext_resource type="Script" path="res://script/loading_screen.gd" id="1_r737y"]
-[ext_resource type="Texture2D" uid="uid://buuitha7gqo4v" path="res://texture/others/futuristic_floor_texture.jpg" id="2_j1sk7"]
-[ext_resource type="Texture2D" uid="uid://6rwme8uc4507" path="res://texture/others/black_noise_background.jpg" id="3_1ygym"]
+[ext_resource type="Texture2D" uid="uid://bgc225vff6pqq" path="res://texture/menu/loading_barlow.png" id="2_4pv0g"]
+[ext_resource type="Texture2D" uid="uid://df3siee5wgvla" path="res://texture/menu/loading_barfull.png" id="3_05k07"]
 [ext_resource type="Shader" path="res://texture/shader/portal.gdshader" id="4_evtxn"]
 [ext_resource type="ArrayMesh" uid="uid://d03yvbbpqt7cc" path="res://objects/Skeleton/skeleton.obj" id="5_adysn"]
 [ext_resource type="Shader" path="res://texture/shader/portalred.gdshader" id="6_clm16"]
@@ -12,6 +12,9 @@
 [ext_resource type="Script" path="res://addons/cyclops_level_builder/resources/data_vector_int.gd" id="10_mhyhy"]
 [ext_resource type="Script" path="res://addons/cyclops_level_builder/resources/mesh_vector_data.gd" id="11_u2p16"]
 [ext_resource type="Material" uid="uid://cye8rpvv7q5k3" path="res://texture/mesh_texture/Tiles074_2K/Tiles074_2K.tres" id="12_gtuxx"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_4i8a4"]
+font_color = Color(0, 1, 0, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_v0ewi"]
 render_priority = 0
@@ -194,18 +197,16 @@ size_flags_horizontal = 6
 script = ExtResource("1_r737y")
 
 [node name="Label" type="Label" parent="."]
+top_level = true
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -22.0
-offset_top = -54.0
-offset_right = 18.0
-offset_bottom = -31.0
+anchors_preset = -1
+anchor_left = 0.482639
+anchor_top = 0.450617
+anchor_right = 0.517361
+anchor_bottom = 0.486111
 grow_horizontal = 2
-grow_vertical = 2
+label_settings = SubResource("LabelSettings_4i8a4")
+metadata/_edit_use_anchors_ = true
 
 [node name="barload" type="TextureProgressBar" parent="."]
 layout_mode = 1
@@ -223,8 +224,8 @@ grow_vertical = 2
 scale = Vector2(11.1439, 1.2547)
 pivot_offset = Vector2(20.1007, 18.331)
 nine_patch_stretch = true
-texture_under = ExtResource("2_j1sk7")
-texture_progress = ExtResource("3_1ygym")
+texture_under = ExtResource("2_4pv0g")
+texture_progress = ExtResource("3_05k07")
 
 [node name="Camerapivot" type="Node3D" parent="."]
 

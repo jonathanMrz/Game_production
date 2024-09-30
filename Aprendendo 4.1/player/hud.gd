@@ -20,10 +20,14 @@ func _process(delta):
 		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 
 func _on_resume_pressed():
+	$TrueClickSound.play()
 	paused = false
 	pass
 
 func _on_quit_pressed():
+	$FaseClickSound.play()
+	$AnimationPlayer.play("fadon")
+	await  get_tree().create_timer(1.5).timeout
 	get_tree().paused = false
 	global.scene = "res://main_menu/menu.tscn"
 	get_tree().change_scene_to_file(global.loadingscreen)

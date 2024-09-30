@@ -16,7 +16,7 @@ var rewind_duraction = 99
 var sensitive = 0.005
 var speed = 10
 var jump_strength = 5
-var gravity = 9.8
+var gravity = 14
 #Bool Values True/False
 var sound_floor_sliding = true
 var sound_wall_sliding = true
@@ -39,6 +39,7 @@ var direction = Vector3.ZERO
 @onready var head_check = $Head_check
 @onready var lifebar = $HUD/Life/Lifebar
 @onready var skeleton = $HUD/Life/Skeleton
+@onready var numvaluelifebar = $HUD/Life/Label
 #Timers
 @onready var big_jump_moment = $Timers/Big_jump_moment
 @onready var big_jump_strenght = $Timers/Big_jump_strenght
@@ -61,6 +62,7 @@ func _ready():
 	global.player = self
 	damege_count = lifebar.value
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	$HUD/AnimationPlayer.play("fadin")
 
 func _unhandled_input(event):
 	if event is InputEventMouseMotion and !rewind and Engine.time_scale !=0:
@@ -76,10 +78,8 @@ func _input(event):
 	if Input.is_action_just_pressed("Q"):
 		if abilit_select == 0:
 			abilit_select = 1
-			$Animation.play("fordward_to_rewind")
 		elif abilit_select == 1:
 			abilit_select =0
-			$Animation.play("rewind_to_fordward")
 	
 	#abilitys event
 	if Input.is_action_pressed("M2") and !respawning:
@@ -97,7 +97,14 @@ func _input(event):
 
 #Process funcs
 func _process(delta):
-	$HUD/Label.text = "%s" % (lifebar.value)
+	if abilit_select == 0:
+		$HUD/Control/Rewind_bar/underrewind.visible = false
+		$HUD/Control/Fordward_bar/underford.visible = true
+	elif abilit_select == 1:
+		$HUD/Control/Rewind_bar/underrewind.visible = true
+		$HUD/Control/Fordward_bar/underford.visible = false
+	
+	numvaluelifebar.text = "%s"%(lifebar.value)
 	if lifebar.value > lifebar.max_value*0.75:
 		if damege_count > lifebar.value:
 			skeleton.play("fulllife_damege")
@@ -188,7 +195,7 @@ func _process(delta):
 		$HUD/Crossair/Fordward_crossair_icon.call_deferred("set_visible",false)
 		fordward_effect.call_deferred("set_visible",false)
 		speed = 10
-		jump_strength = 5
+		jump_strength = 6
 
 func _physics_process(delta):
 	if lifebar.value <=0:
@@ -266,7 +273,9 @@ func _physics_process(delta):
 		camera.transform.origin = _headplayer(t_player)
 	
 	#jump and big_jump
-	if Input.is_action_just_pressed("Space") and is_on_floor() and !head_check.is_colliding() and !rewind: 
+	if is_on_floor():
+		$Timers/Jump_air.start()
+	if Input.is_action_just_pressed("Space") and $Timers/Jump_air.time_left and !head_check.is_colliding() and !rewind: 
 		if big_jump_moment.time_left> 0:
 			velocity.y = clamp(jump_strength + ms, jump_strength+1, 20)
 			$SFX/jump_sound.set_pitch_scale(1.8)
@@ -274,6 +283,7 @@ func _physics_process(delta):
 		else:
 			velocity.y = clamp(jump_strength, jump_strength, 10)
 			$SFX/jump_sound.play()
+		$Timers/Jump_air.stop()
 		disable_slide = true
 	
 	#dash
@@ -289,6 +299,7 @@ func _physics_process(delta):
 			velocity.x = lerp(velocity.x, direction.x, delta * 0)  * (ms/3 +2)
 			velocity.z = lerp(velocity.z, direction.z, delta * 0)  * (ms/3 +2)
 			$SFX/big_dash_sound.play()
+		velocity.y = 3
 	elif dash and is_on_floor() or dash and is_on_wall():
 		dash_count = 1
 		dash = false
@@ -383,7 +394,7 @@ func fordward_process(delta):
 	music_controller.music_pitch(1.02)
 	$HUD/Crossair/Fordward_crossair_icon.call_deferred("set_visible",true)
 	fordward_effect.call_deferred("set_visible",true)
-	jump_strength = 6
+	jump_strength = 7
 	speed = 15
 	$Timers/Stap_timer.set_wait_time(0.2)
 	await get_tree().create_timer(0.1).timeout

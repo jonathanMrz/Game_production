@@ -8,6 +8,7 @@ var scene_load_stats = 0
 var rotation_speed = 15
 
 func _ready():
+	music_controller.stop()
 	SceneName = global.scene
 	ResourceLoader.load_threaded_request(SceneName)
 

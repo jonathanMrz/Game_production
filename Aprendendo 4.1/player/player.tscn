@@ -1,4 +1,4 @@
-[gd_scene load_steps=96 format=3 uid="uid://ls1l2ut2f0cx"]
+[gd_scene load_steps=105 format=3 uid="uid://ls1l2ut2f0cx"]
 
 [ext_resource type="Script" path="res://player/script_player/player.gd" id="1_rx7fi"]
 [ext_resource type="Script" path="res://player/hud.gd" id="2_4h548"]
@@ -29,6 +29,7 @@
 [ext_resource type="Texture2D" uid="uid://mq3j6hjcwpf8" path="res://texture/animation/skull_animation/lifebar_full/skull07.png" id="15_voph3"]
 [ext_resource type="Texture2D" uid="uid://duf6t1tj8mkyy" path="res://texture/animation/lifebar_animation/lifebar_value3.png" id="16_4wxqf"]
 [ext_resource type="Texture2D" uid="uid://cxeh0j41rnq3y" path="res://texture/animation/skull_animation/lifebar_full/skull09l.png" id="16_jivcb"]
+[ext_resource type="Texture2D" uid="uid://djpysmbrjvi88" path="res://texture/others/habilitunderbar.png" id="16_qsgfc"]
 [ext_resource type="Theme" uid="uid://binvd3pgmo5ek" path="res://texture/menu/options.tres" id="16_yf8d2"]
 [ext_resource type="AudioStream" uid="uid://cmkhg1lrsc3ur" path="res://sound/sfx/alert1.mp3" id="17_hc0rl"]
 [ext_resource type="Texture2D" uid="uid://b7c00hoqrv8h1" path="res://texture/animation/skull_animation/lifebar_full/skull08.png" id="17_j1ia7"]
@@ -78,6 +79,9 @@
 [ext_resource type="Texture2D" uid="uid://c1dhss5bps8o5" path="res://texture/animation/skull_animation/lifebar_mid/skull05r.png" id="56_7yhve"]
 [ext_resource type="Texture2D" uid="uid://crrxdtxfkdrm6" path="res://texture/animation/skull_animation/lifebar_mid/skull06l.png" id="57_gwhtt"]
 [ext_resource type="Texture2D" uid="uid://cxkrp767qwf3s" path="res://texture/animation/skull_animation/lifebar_mid/skull06r.png" id="58_v80oe"]
+[ext_resource type="AudioStream" uid="uid://dusyk7udatrvs" path="res://sound/sfx/click.mp3" id="71_wreyr"]
+[ext_resource type="AudioStream" uid="uid://dbqi4j28wicd7" path="res://sound/sfx/click2.mp3" id="72_h31ea"]
+[ext_resource type="AudioStream" uid="uid://d0ie01qihoelg" path="res://sound/sfx/click3.mp3" id="73_5l6dh"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_fnahj"]
 
@@ -441,6 +445,52 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="LabelSettings" id="LabelSettings_0gjwc"]
+font_size = 28
+outline_size = 8
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_bprw6"]
+font_size = 37
+outline_size = 9
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="Animation" id="Animation_d40ie"]
+resource_name = "fadin"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ColorRect:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, 700)]
+}
+
+[sub_resource type="Animation" id="Animation_ry5c1"]
+resource_name = "fadon"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ColorRect:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0, 700), Vector2(0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ka1ej"]
+_data = {
+"fadin": SubResource("Animation_d40ie"),
+"fadon": SubResource("Animation_ry5c1")
+}
+
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_wps60"]
 playback_mode = 2
 streams_count = 2
@@ -452,34 +502,10 @@ stream_1/weight = 1.0
 [sub_resource type="Animation" id="Animation_pe7vq"]
 resource_name = "fordward_to_rewind"
 length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("HUD/Control2/ColorRect:anchors_preset")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [0]
-}
 
 [sub_resource type="Animation" id="Animation_u68im"]
 resource_name = "rewind_to_fordward"
 length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("HUD/Control2/ColorRect:anchors_preset")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [1]
-}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_wbyco"]
 _data = {
@@ -602,6 +628,14 @@ nine_patch_stretch = true
 texture_under = ExtResource("8_644l4")
 texture_progress = SubResource("AnimatedTexture_5m0e2")
 
+[node name="underrewind" type="TextureRect" parent="HUD/Control/Rewind_bar"]
+layout_mode = 1
+offset_top = 63.0
+offset_right = 1220.0
+offset_bottom = 203.0
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("16_qsgfc")
+
 [node name="Fordward_bar" type="TextureProgressBar" parent="HUD/Control"]
 light_mask = 512
 visibility_layer = 512
@@ -622,12 +656,13 @@ nine_patch_stretch = true
 texture_under = ExtResource("12_ogxli")
 texture_progress = SubResource("AnimatedTexture_3n5ng")
 
-[node name="Label" type="Label" parent="HUD"]
-offset_left = 399.0
-offset_top = 492.0
-offset_right = 423.0
-offset_bottom = 515.0
-scale = Vector2(1.73498, 1.06578)
+[node name="underford" type="TextureRect" parent="HUD/Control/Fordward_bar"]
+layout_mode = 0
+offset_top = 63.0
+offset_right = 1220.0
+offset_bottom = 203.0
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("16_qsgfc")
 
 [node name="Pause_menu" type="MarginContainer" parent="HUD"]
 visible = false
@@ -704,29 +739,53 @@ sprite_frames = SubResource("SpriteFrames_o4rgc")
 animation = &"midlife_damege"
 speed_scale = 0.5
 
-[node name="Control2" type="Control" parent="HUD"]
-layout_mode = 3
-anchors_preset = 12
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 104.0
-offset_top = -23.0
-offset_right = 104.0
-offset_bottom = -23.0
-grow_horizontal = 2
-grow_vertical = 0
-scale = Vector2(0.821322, 0.854234)
+[node name="Label" type="Label" parent="HUD/Life"]
+layout_mode = 0
+offset_left = 134.0
+offset_top = -4.0
+offset_right = 182.0
+offset_bottom = 35.0
+scale = Vector2(1.73498, 1.06578)
+text = "250"
+label_settings = SubResource("LabelSettings_0gjwc")
 
-[node name="ColorRect" type="ColorRect" parent="HUD/Control2"]
-layout_mode = 1
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -100.0
-offset_bottom = 10.0
-grow_horizontal = 0
-pivot_offset = Vector2(50, 5)
+[node name="Label2" type="Label" parent="HUD/Life"]
+layout_mode = 0
+offset_left = 234.0
+offset_top = -4.0
+offset_right = 282.0
+offset_bottom = 35.0
+scale = Vector2(1.73498, 1.06578)
+text = "250"
+label_settings = SubResource("LabelSettings_0gjwc")
+
+[node name="Label3" type="Label" parent="HUD/Life"]
+layout_mode = 0
+offset_left = 220.0
+offset_top = -12.0
+offset_right = 234.0
+offset_bottom = 39.0
+text = "/"
+label_settings = SubResource("LabelSettings_bprw6")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="HUD"]
+root_node = NodePath("../..")
+libraries = {
+"": SubResource("AnimationLibrary_ka1ej")
+}
+speed_scale = 1.5
+
+[node name="TrueClickSound" type="AudioStreamPlayer" parent="HUD"]
+stream = ExtResource("71_wreyr")
+volume_db = -5.0
+
+[node name="FalseClickSound" type="AudioStreamPlayer" parent="HUD"]
+stream = ExtResource("72_h31ea")
+volume_db = -5.0
+
+[node name="FaseClickSound" type="AudioStreamPlayer" parent="HUD"]
+stream = ExtResource("73_5l6dh")
+volume_db = -5.0
 
 [node name="Timers" type="Node" parent="."]
 
@@ -749,6 +808,10 @@ one_shot = true
 wait_time = 3.0
 one_shot = true
 
+[node name="Jump_air" type="Timer" parent="Timers"]
+wait_time = 0.3
+one_shot = true
+
 [node name="SFX" type="Node" parent="."]
 
 [node name="jump_sound" type="AudioStreamPlayer" parent="SFX"]
@@ -767,7 +830,7 @@ pitch_scale = 1.5
 
 [node name="dash_sound" type="AudioStreamPlayer" parent="SFX"]
 stream = ExtResource("9_wvo7y")
-volume_db = -4.0
+volume_db = 3.0
 
 [node name="big_dash_sound" type="AudioStreamPlayer" parent="SFX"]
 stream = ExtResource("10_rrl1p")
@@ -798,6 +861,16 @@ libraries = {
 "": SubResource("AnimationLibrary_wbyco")
 }
 speed_scale = 0.3
+
+[node name="ColorRect" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = 0.00012207
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+metadata/_edit_use_anchors_ = true
 
 [connection signal="pressed" from="HUD/Pause_menu/VBoxContainer/Resume" to="HUD" method="_on_resume_pressed"]
 [connection signal="pressed" from="HUD/Pause_menu/VBoxContainer/Quit" to="HUD" method="_on_quit_pressed"]
