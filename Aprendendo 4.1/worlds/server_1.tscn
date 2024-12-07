@@ -8905,7 +8905,7 @@ mesh_vector_data = SubResource("Resource_wg2ni")
 materials = Array[Material]([ExtResource("12_fa265")])
 
 [node name="Label3D" type="Label3D" parent="TileMap/Read2"]
-transform = Transform3D(0.838202, 0, -0.0130716, 0, 0.937438, 0, 0.0111193, 0, 0.985442, -0.492681, 2.87537, -1.0405)
+transform = Transform3D(0.838202, 0, -0.0130716, 0, 0.937438, 0, 0.0111193, 0, 0.985442, -0.499973, 2.87537, -1.07579)
 pixel_size = 0.007
 text = "\"Space\" in wall to wall_slide
  Released \"Space\" in wall_slide to jump"
