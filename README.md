@@ -1,6 +1,4 @@
 # Virtual_Death
- Creating a game for school work
+Creating my first game in godot 4
 
-//Finalized
-
-ps: the game is not complete, but I presented it, and therefore I will not continue its production
+Link to install the executable: ]https://jonathanmrz.itch.io/virtual-death](https://jonathanmrz.itch.io/virtual-death)
